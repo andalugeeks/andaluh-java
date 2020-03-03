@@ -1,15 +1,14 @@
 package com.andaluh;
+import static java.nio.charset.StandardCharsets.*;
 
 public class Andaluh {
     public static String epa(String textoEspanyol, char charCedilla, char charJejeo, boolean escapeLinks, boolean debug)
     {
+
+        byte[] byteArrayAux = textoEspanyol.getBytes();
+        String textoEspanyolUTF8 = new String(byteArrayAux, UTF_8);
         /*
 
-
-
-
-        # Main function
-def epa(text, vaf=VAF, vvf=VVF, escapeLinks=False, debug=False):
     rules = [
         h_rules,
         x_rules,
@@ -25,9 +24,6 @@ def epa(text, vaf=VAF, vvf=VVF, escapeLinks=False, debug=False):
         exception_rules,
         word_interaction_rules
     ]
-
-    if type(text) != unicode:
-        text = unicode(text, 'utf-8')
 
     # Do not start transcription if the input is empty
     if not text:
@@ -69,7 +65,7 @@ def epa(text, vaf=VAF, vvf=VVF, escapeLinks=False, debug=False):
 
 
         // TODO
-        String textoAndaluh = textoEspanyol;
+        String textoAndaluh = textoEspanyolUTF8;
         return textoAndaluh;
     }
     
