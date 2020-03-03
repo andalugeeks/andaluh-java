@@ -5,8 +5,12 @@ public class Andaluh {
     public static String epa(String textoEspanyol, char charCedilla, char charJejeo, boolean escapeLinks, boolean debug)
     {
 
+        if(textoEspanyol == null || textoEspanyol.isEmpty() || textoEspanyol.isBlank()) return "";
+
         byte[] byteArrayAux = textoEspanyol.getBytes();
         String textoEspanyolUTF8 = new String(byteArrayAux, UTF_8);
+
+
         /*
 
     rules = [
@@ -24,10 +28,6 @@ public class Andaluh {
         exception_rules,
         word_interaction_rules
     ]
-
-    # Do not start transcription if the input is empty
-    if not text:
-        return text
 
     def transliterate(text):
         for rule in rules:
