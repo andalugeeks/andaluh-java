@@ -1,8 +1,12 @@
 package com.andaluh;
+import javafx.util.Pair;
+
+import java.util.Arrays;
+
 import static java.nio.charset.StandardCharsets.*;
 
 public class Andaluh {
-    public static String transliterate(String text) {
+    public static String transliterate(String[] text) {
         /*
         for rule in rules:
         if rule in[ x_rules, vaf_rules]:
@@ -14,8 +18,22 @@ public class Andaluh {
         if debug:
         print rule.func_name + ' => ' + text
         */
-        return text;
+        return JoinStrings(text);
     }
+
+    public static String transliterate(String[] text, boolean[] ignores) {
+
+        return JoinStrings(text);
+    }
+
+    public static String JoinStrings(String[] text) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for(String strText : text) {
+            stringBuilder.append(strText);
+        }
+        return stringBuilder.toString();
+    }
+
 
     public static String epa(String textoEspanyol, char charCedilla, char charJejeo, boolean escapeLinks, boolean debug)
     {
@@ -24,7 +42,7 @@ public class Andaluh {
 
         byte[] byteArrayAux = textoEspanyol.getBytes();
         String textoEspanyolUTF8 = new String(byteArrayAux, UTF_8);
-
+        String[] textoEspanyolUTF8_splitted = textoEspanyolUTF8.split("(?<=-)|(?<= )|(?<=,)|(?<=;)|(?<=:)|(?<=\\.)");
 
         /*
 
@@ -43,28 +61,31 @@ public class Andaluh {
         exception_rules,
         word_interaction_rules
     ]
-*/
+        */
 
         String[] tags;
         if (escapeLinks)
         {
-            // TODO: idea generar una estructura de datos que sea un array de pares string y boolean solo con una llamada
-            //       para esto hay que sobrecargar
-            // por ejemplo: ParStringBoolean[] textoEspanyolUTF8_Ignorando = ProcessIgnorar(textoEspanyolUTF8);
-
-            String text_and = transliterate(textoEspanyolUTF8); // aqui iria el textoEspanyolUTF8_Ignorando
-
+            boolean[] ignores = GetIgnores(textoEspanyolUTF8_splitted);
+            String text_and = transliterate(textoEspanyolUTF8_splitted, ignores);
 
             return text_and;
         }
         else
         {
-            return transliterate(textoEspanyolUTF8);
+            return transliterate(textoEspanyolUTF8_splitted);
         }
 
     }
-    
-    
+
+    public static boolean[] GetIgnores(String[] text)
+    {
+        boolean[] ignores = new boolean[text.length];
+        Arrays.fill(ignores, false);
+        return ignores;
+    }
+
+
     public static String epa(String textoEspanyol, char charCedilla, char charJejeo, boolean escapeLinks)
     {
         return epa(textoEspanyol, charCedilla, charJejeo, escapeLinks, false);
