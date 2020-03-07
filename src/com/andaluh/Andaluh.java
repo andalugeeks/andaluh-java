@@ -34,74 +34,74 @@ public class Andaluh {
     };
 
     public static final List<Pair<String,String>> H_RULES_EXCEPT = List.of(
-            new Pair("haz", "âh"), new Pair("hez", "êh"), new Pair("hoz", "ôh"),
-            new Pair("oh", "ôh"),
-            new Pair("yihad", "yihá"),
-            new Pair("h", "h") // Keep an isolated h as-is
+            new Pair<String, String>("haz", "âh"), new Pair<String, String>("hez", "êh"), new Pair<String, String>("hoz", "ôh"),
+            new Pair<String, String>("oh", "ôh"),
+            new Pair<String, String>("yihad", "yihá"),
+            new Pair<String, String>("h", "h") // Keep an isolated h as-is
     );
 
     public static final List<Pair<String,String>> GJ_RULES_EXCEPT = List.of(
-            new Pair("gin", "yin"), new Pair("jazz", "yâh"), new Pair("jet", "yêh")
+            new Pair<String, String>("gin", "yin"), new Pair<String, String>("jazz", "yâh"), new Pair<String, String>("jet", "yêh")
     );
 
     public static final List<Pair<String,String>> V_RULES_EXCEPT = List.of(
-            new Pair("vis", "bî"), new Pair("ves", "bêh")
+            new Pair<String, String>("vis", "bî"), new Pair<String, String>("ves", "bêh")
     );
 
     public static final List<Pair<String,String>> LL_RULES_EXCEPT = List.of(
-            new Pair("grill", "grîh")
+            new Pair<String, String>("grill", "grîh")
     );
 
     public static final List<Pair<String,String>> WORDEND_D_RULES_EXCEPT = List.of(
-            new Pair("çed", "çêh")
+            new Pair<String, String>("çed", "çêh")
     );
 
     public static final List<Pair<String,String>> WORDEND_S_RULES_EXCEPT = List.of(
-            new Pair("bies", "biêh"), new Pair("bis", "bîh"), new Pair("blues", "blû"), new Pair("bus", "bûh"),
-            new Pair("dios", "diôh"), new Pair("dos", "dôh"),
-            new Pair("gas", "gâh"), new Pair("gres", "grêh"), new Pair("gris", "grîh"),
-            new Pair("luis", "luîh"),
-            new Pair("mies", "miêh"), new Pair("mus", "mûh"),
-            new Pair("os", "ô"),
-            new Pair("pis", "pîh"), new Pair("plus", "plûh"), new Pair("pus", "pûh"),
-            new Pair("ras", "râh"), new Pair("res", "rêh"),
-            new Pair("tos", "tôh"), new Pair("tres", "trêh"), new Pair("tris", "trîh")
+            new Pair<String, String>("bies", "biêh"), new Pair<String, String>("bis", "bîh"), new Pair<String, String>("blues", "blû"), new Pair<String, String>("bus", "bûh"),
+            new Pair<String, String>("dios", "diôh"), new Pair<String, String>("dos", "dôh"),
+            new Pair<String, String>("gas", "gâh"), new Pair<String, String>("gres", "grêh"), new Pair<String, String>("gris", "grîh"),
+            new Pair<String, String>("luis", "luîh"),
+            new Pair<String, String>("mies", "miêh"), new Pair<String, String>("mus", "mûh"),
+            new Pair<String, String>("os", "ô"),
+            new Pair<String, String>("pis", "pîh"), new Pair<String, String>("plus", "plûh"), new Pair<String, String>("pus", "pûh"),
+            new Pair<String, String>("ras", "râh"), new Pair<String, String>("res", "rêh"),
+            new Pair<String, String>("tos", "tôh"), new Pair<String, String>("tres", "trêh"), new Pair<String, String>("tris", "trîh")
     );
 
     public static final List<Pair<String,String>> WORDEND_CONST_RULES_EXCEPT = List.of(
-            new Pair("al", "al"), new Pair("cual", "cuâ"), new Pair("del", "del"), new Pair("dél", "dél"), new Pair("el","el"), new Pair("él","èl"), new Pair("tal", "tal"), new Pair("bil", "bîl"),
+            new Pair<String, String>("al", "al"), new Pair<String, String>("cual", "cuâ"), new Pair<String, String>("del", "del"), new Pair<String, String>("dél", "dél"), new Pair<String, String>("el","el"), new Pair<String, String>("él","èl"), new Pair<String, String>("tal", "tal"), new Pair<String, String>("bil", "bîl"),
             // TODO, uir = huir. Maybe better to add the exceptions on h_rules?
-            new Pair("por", "por"), new Pair("uir", "huîh"),
+            new Pair<String, String>("por", "por"), new Pair<String, String>("uir", "huîh"),
             // sic, tac
-            new Pair("çic", "çic"), new Pair("tac", "tac"),
-            new Pair("yak", "yak"),
-            new Pair("stop", "êttôh"), new Pair("bip", "bip")
+            new Pair<String, String>("çic", "çic"), new Pair<String, String>("tac", "tac"),
+            new Pair<String, String>("yak", "yak"),
+            new Pair<String, String>("stop", "êttôh"), new Pair<String, String>("bip", "bip")
     );
 
     public static final List<Pair<String,String>> WORDEND_D_INTERVOWEL_RULES_EXCEPT = List.of(
             // Ending with -ado
-            new Pair("fado", "fado"), new Pair("cado", "cado"), new Pair("nado", "nado"), new Pair("priado", "priado"),
+            new Pair<String, String>("fado", "fado"), new Pair<String, String>("cado", "cado"), new Pair<String, String>("nado", "nado"), new Pair<String, String>("priado", "priado"),
             // Ending with -ada
-            new Pair("fabada", "fabada"), new Pair("fabadas","fabadas"), new Pair("fada", "fada"), new Pair("ada", "ada"), new Pair("lada", "lada"), new Pair("rada", "rada"),
+            new Pair<String, String>("fabada", "fabada"), new Pair<String, String>("fabadas","fabadas"), new Pair<String, String>("fada", "fada"), new Pair<String, String>("ada", "ada"), new Pair<String, String>("lada", "lada"), new Pair<String, String>("rada", "rada"),
             // Ending with -adas
-            new Pair("adas", "adas"), new Pair("radas", "radas"), new Pair("nadas", "nadas"),
+            new Pair<String, String>("adas", "adas"), new Pair<String, String>("radas", "radas"), new Pair<String, String>("nadas", "nadas"),
             // Ending with -ido
-            new Pair("aikido", "aikido"), new Pair("bûççido", "bûççido"), new Pair("çido", "çido"), new Pair("cuido", "cuido"), new Pair("cupido", "cupido"), new Pair("descuido", "descuido"),
-            new Pair("despido", "despido"), new Pair("eido", "eido"), new Pair("embido", "embido"), new Pair("fido", "fido"), new Pair("hido", "hido"), new Pair("ido", "ido"), new Pair("infido", "infido"),
-            new Pair("laido", "laido"), new Pair("libido", "libido"), new Pair("nido", "nido"), new Pair("nucleido", "nucleido"), new Pair("çonido", "çonido"), new Pair("çuido", "çuido")
+            new Pair<String, String>("aikido", "aikido"), new Pair<String, String>("bûççido", "bûççido"), new Pair<String, String>("çido", "çido"), new Pair<String, String>("cuido", "cuido"), new Pair<String, String>("cupido", "cupido"), new Pair<String, String>("descuido", "descuido"),
+            new Pair<String, String>("despido", "despido"), new Pair<String, String>("eido", "eido"), new Pair<String, String>("embido", "embido"), new Pair<String, String>("fido", "fido"), new Pair<String, String>("hido", "hido"), new Pair<String, String>("ido", "ido"), new Pair<String, String>("infido", "infido"),
+            new Pair<String, String>("laido", "laido"), new Pair<String, String>("libido", "libido"), new Pair<String, String>("nido", "nido"), new Pair<String, String>("nucleido", "nucleido"), new Pair<String, String>("çonido", "çonido"), new Pair<String, String>("çuido", "çuido")
     );
 
     public static final List<Pair<String,String>> ENDING_RULES_EXCEPTION = List.of(
             // Exceptions to digraph rules with nm
-            new Pair("biêmmandao","bienmandao"), new Pair("biêmmeçabe","bienmeçabe"), new Pair("buêmmoço","buenmoço"), new Pair("çiêmmiléçima","çienmiléçima"), new Pair("çiêmmiléçimo","çienmiléçimo"), new Pair("çiêmmilímetro","çienmilímetro"), new Pair("çiêmmiyonéçima","çienmiyonéçima"), new Pair("çiêmmiyonéçimo","çienmiyonéçimo"), new Pair("çiêmmirmiyonéçima","çienmirmiyonéçima"), new Pair("çiêmmirmiyonéçimo","çienmirmiyonéçimo"),
+            new Pair<String, String>("biêmmandao","bienmandao"), new Pair<String, String>("biêmmeçabe","bienmeçabe"), new Pair<String, String>("buêmmoço","buenmoço"), new Pair<String, String>("çiêmmiléçima","çienmiléçima"), new Pair<String, String>("çiêmmiléçimo","çienmiléçimo"), new Pair<String, String>("çiêmmilímetro","çienmilímetro"), new Pair<String, String>("çiêmmiyonéçima","çienmiyonéçima"), new Pair<String, String>("çiêmmiyonéçimo","çienmiyonéçimo"), new Pair<String, String>("çiêmmirmiyonéçima","çienmirmiyonéçima"), new Pair<String, String>("çiêmmirmiyonéçimo","çienmirmiyonéçimo"),
             // Exceptions to l rules
-            new Pair("marrotadôh","mârrotadôh"), new Pair("marrotâh","mârrotâh"), new Pair("mirrayâ","mîrrayâ"),
+            new Pair<String, String>("marrotadôh","mârrotadôh"), new Pair<String, String>("marrotâh","mârrotâh"), new Pair<String, String>("mirrayâ","mîrrayâ"),
             // Exceptions to psico pseudo rules
-            new Pair("herôççiquiatría","heroçiquiatría"), new Pair("herôççiquiátrico","heroçiquiátrico"), new Pair("farmacôççiquiatría","farmacoçiquiatría"), new Pair("metempçícoçî","metemçícoçî"), new Pair("necróçico","necróççico"), new Pair("pampçiquîmmo","pamçiquîmmo"),
+            new Pair<String, String>("herôççiquiatría","heroçiquiatría"), new Pair<String, String>("herôççiquiátrico","heroçiquiátrico"), new Pair<String, String>("farmacôççiquiatría","farmacoçiquiatría"), new Pair<String, String>("metempçícoçî","metemçícoçî"), new Pair<String, String>("necróçico","necróççico"), new Pair<String, String>("pampçiquîmmo","pamçiquîmmo"),
             // Other exceptions
-            new Pair("antîççerôttármico","antiçerôttármico"), new Pair("eclampçia","eclampçia"), new Pair("pôttoperatorio","pôççoperatorio"), new Pair("çáccrito","çánccrito"), new Pair("manbîh","mambîh"), new Pair("cômmelináçeo","commelináçeo"), new Pair("dîmmneçia","dînneçia"), new Pair("todo", "tó"), new Pair("todô", "tôh"), new Pair("toda", "toa"), new Pair("todâ", "toâ"),
+            new Pair<String, String>("antîççerôttármico","antiçerôttármico"), new Pair<String, String>("eclampçia","eclampçia"), new Pair<String, String>("pôttoperatorio","pôççoperatorio"), new Pair<String, String>("çáccrito","çánccrito"), new Pair<String, String>("manbîh","mambîh"), new Pair<String, String>("cômmelináçeo","commelináçeo"), new Pair<String, String>("dîmmneçia","dînneçia"), new Pair<String, String>("todo", "tó"), new Pair<String, String>("todô", "tôh"), new Pair<String, String>("toda", "toa"), new Pair<String, String>("todâ", "toâ"),
             // Other exceptions monosyllables
-            new Pair("as","âh"), new Pair("clown","claun"), new Pair("crack","crâh"), new Pair("down","daun"), new Pair("es","êh"), new Pair("ex","êh"), new Pair("ir","îh"), new Pair("miss","mîh"), new Pair("muy","mu"), new Pair("ôff","off"), new Pair("os","ô"), new Pair("para","pa"), new Pair("ring","rin"), new Pair("rock","rôh"), new Pair("spray","êppray"), new Pair("sprint","êpprín"), new Pair("wa","gua")
+            new Pair<String, String>("as","âh"), new Pair<String, String>("clown","claun"), new Pair<String, String>("crack","crâh"), new Pair<String, String>("down","daun"), new Pair<String, String>("es","êh"), new Pair<String, String>("ex","êh"), new Pair<String, String>("ir","îh"), new Pair<String, String>("miss","mîh"), new Pair<String, String>("muy","mu"), new Pair<String, String>("ôff","off"), new Pair<String, String>("os","ô"), new Pair<String, String>("para","pa"), new Pair<String, String>("ring","rin"), new Pair<String, String>("rock","rôh"), new Pair<String, String>("spray","êppray"), new Pair<String, String>("sprint","êpprín"), new Pair<String, String>("wa","gua")
     );
 
     public static String transliterate(String[] text) {
