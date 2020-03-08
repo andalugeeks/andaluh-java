@@ -1,27 +1,28 @@
 package com.andaluh;
-import javafx.util.Pair;
 
 import java.util.Arrays;
-import java.util.List;
-
-import com.andaluh.AndaluhRules;
 
 import static java.nio.charset.StandardCharsets.*;
 
 public class Andaluh {
+
+    public static String transliterate(String text)
+    {
+        return TransliterateString(text);
+    }
 
     public static String transliterate(String[] text)
     {
         String[] textOut = new String[text.length];
         for (int i = 0; i < text.length; i++)
         {
-            textOut[i] = TransliterateSingleWord(text[i]);
+            textOut[i] = TransliterateString(text[i]);
         }
 
         return JoinStrings(textOut);
     }
 
-    public static String TransliterateSingleWord(String palabra)
+    public static String TransliterateString(String palabra)
     {
         palabra = AndaluhRules.h_rules(palabra);
         palabra = AndaluhRules.x_rules(palabra);
@@ -45,7 +46,7 @@ public class Andaluh {
         String[] textOut = new String[text.length];
         for (int i = 0; i < text.length; i++)
         {
-            textOut[i] = ignores[i] ? text[i] : TransliterateSingleWord(text[i]);
+            textOut[i] = ignores[i] ? text[i] : TransliterateString(text[i]);
         }
 
         return JoinStrings(textOut);
@@ -67,7 +68,6 @@ public class Andaluh {
 
         byte[] byteArrayAux = textoEspanyol.getBytes();
         String textoEspanyolUTF8 = new String(byteArrayAux, UTF_8);
-        String[] textoEspanyolUTF8_splitted = textoEspanyolUTF8.split("(?<=-)|(?<= )|(?<=,)|(?<=;)|(?<=:)|(?<=\\.)");
 
         /*
 
@@ -91,14 +91,19 @@ public class Andaluh {
         String[] tags;
         if (escapeLinks)
         {
+
+            String[] textoEspanyolUTF8_splitted = textoEspanyolUTF8.split("(?<=-)|(?<= )|(?<=,)|(?<=;)|(?<=:)|(?<=\\.)");
+
             boolean[] ignores = GetIgnores(textoEspanyolUTF8_splitted);
+
+            //TODO: group arrays between ignored words
             String text_and = transliterate(textoEspanyolUTF8_splitted, ignores);
 
             return text_and;
         }
         else
         {
-            return transliterate(textoEspanyolUTF8_splitted);
+            return transliterate(textoEspanyolUTF8);
         }
 
     }
