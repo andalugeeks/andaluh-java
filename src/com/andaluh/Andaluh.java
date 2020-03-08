@@ -15,29 +15,43 @@ public class Andaluh {
 
     public static String transliterate(String[] text)
     {
-        for (String palabra : text)
+        String[] textOut = new String[text.length];
+        for (int i = 0; i < text.length; i++)
         {
-            palabra = AndaluhRules.h_rules(palabra);
-            palabra = AndaluhRules.x_rules(palabra);
-            palabra = AndaluhRules.ch_rules(palabra);
-            palabra = AndaluhRules.gj_rules(palabra);
-            palabra = AndaluhRules.v_rules(palabra);
-            palabra = AndaluhRules.ll_rules(palabra);
-            palabra = AndaluhRules.l_rules(palabra);
-            palabra = AndaluhRules.psico_pseudo_rules(palabra);
-            palabra = AndaluhRules.vaf_rules(palabra);
-            palabra = AndaluhRules.word_ending_rules(palabra);
-            palabra = AndaluhRules.digraph_rules(palabra);
-            palabra = AndaluhRules.exception_rules(palabra);
-            palabra = AndaluhRules.word_interaction_rules(palabra);
+            textOut[i] = TransliterateSingleWord(text[i]);
         }
 
-        return JoinStrings(text);
+        return JoinStrings(textOut);
     }
 
-    public static String transliterate(String[] text, boolean[] ignores) {
+    public static String TransliterateSingleWord(String palabra)
+    {
+        palabra = AndaluhRules.h_rules(palabra);
+        palabra = AndaluhRules.x_rules(palabra);
+        palabra = AndaluhRules.ch_rules(palabra);
+        palabra = AndaluhRules.gj_rules(palabra);
+        palabra = AndaluhRules.v_rules(palabra);
+        palabra = AndaluhRules.ll_rules(palabra);
+        palabra = AndaluhRules.l_rules(palabra);
+        palabra = AndaluhRules.psico_pseudo_rules(palabra);
+        palabra = AndaluhRules.vaf_rules(palabra);
+        palabra = AndaluhRules.word_ending_rules(palabra);
+        palabra = AndaluhRules.digraph_rules(palabra);
+        palabra = AndaluhRules.exception_rules(palabra);
+        palabra = AndaluhRules.word_interaction_rules(palabra);
 
-        return JoinStrings(text);
+        return palabra;
+    }
+
+    public static String transliterate(String[] text, boolean[] ignores)
+    {
+        String[] textOut = new String[text.length];
+        for (int i = 0; i < text.length; i++)
+        {
+            textOut[i] = ignores[i] ? text[i] : TransliterateSingleWord(text[i]);
+        }
+
+        return JoinStrings(textOut);
     }
 
     public static String JoinStrings(String[] text) {
@@ -95,7 +109,7 @@ public class Andaluh {
     public static boolean[] GetIgnores(String[] text)
     {
         boolean[] ignores = new boolean[text.length];
-        Arrays.fill(ignores, false);
+        Arrays.fill(ignores, false); //TODO: iterate through all strings and set its boolean
         return ignores;
     }
 
