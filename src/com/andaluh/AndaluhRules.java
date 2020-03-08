@@ -120,6 +120,11 @@ public class AndaluhRules {
             new Pair<String, String>("as","âh"), new Pair<String, String>("clown","claun"), new Pair<String, String>("crack","crâh"), new Pair<String, String>("down","daun"), new Pair<String, String>("es","êh"), new Pair<String, String>("ex","êh"), new Pair<String, String>("ir","îh"), new Pair<String, String>("miss","mîh"), new Pair<String, String>("muy","mu"), new Pair<String, String>("ôff","off"), new Pair<String, String>("os","ô"), new Pair<String, String>("para","pa"), new Pair<String, String>("ring","rin"), new Pair<String, String>("rock","rôh"), new Pair<String, String>("spray","êppray"), new Pair<String, String>("sprint","êpprín"), new Pair<String, String>("wa","gua")
     );
 
+    public static String h_rules_replacer(MatchResult matchResult, String text)
+    {
+        return text;
+    }
+
     public static String h_rules (String text)
     {
         return text;
@@ -137,7 +142,17 @@ public class AndaluhRules {
         return matcher_x.replaceAll(matchResult -> x_rules_replacer(matchResult, text));
     }
 
+    public static String ch_rules_replacer(MatchResult matchResult, String text)
+    {
+        return text;
+    }
+
     public static String ch_rules (String text)
+    {
+        return text;
+    }
+
+    public static String gj_rules_replacer(MatchResult matchResult, String text)
     {
         return text;
     }
@@ -147,7 +162,17 @@ public class AndaluhRules {
         return text;
     }
 
+    public static String v_rules_replacer(MatchResult matchResult, String text)
+    {
+        return text;
+    }
+
     public static String v_rules (String text)
+    {
+        return text;
+    }
+
+    public static String ll_rules_replacer(MatchResult matchResult, String text)
     {
         return text;
     }
@@ -157,7 +182,17 @@ public class AndaluhRules {
         return text;
     }
 
+    public static String l_rules_replacer(MatchResult matchResult, String text)
+    {
+        return text;
+    }
+
     public static String l_rules (String text)
+    {
+        return text;
+    }
+
+    public static String psico_pseudo_rules_replacer(MatchResult matchResult, String text)
     {
         return text;
     }
@@ -167,7 +202,17 @@ public class AndaluhRules {
         return text;
     }
 
+    public static String vaf_rules_replacer(MatchResult matchResult, String text)
+    {
+        return text;
+    }
+
     public static String vaf_rules (String text)
+    {
+        return text;
+    }
+
+    public static String word_ending_rules_replacer(MatchResult matchResult, String text)
     {
         return text;
     }
@@ -177,12 +222,27 @@ public class AndaluhRules {
         return text;
     }
 
+    public static String digraph_rules_replacer(MatchResult matchResult, String text)
+    {
+        return text;
+    }
+
     public static String digraph_rules (String text)
     {
         return text;
     }
 
+    public static String exception_rules_replacer(MatchResult matchResult, String text)
+    {
+        return text;
+    }
+
     public static String exception_rules (String text)
+    {
+        return text;
+    }
+
+    public static String word_interaction_rules_replacer(MatchResult matchResult, String text)
     {
         return text;
     }
