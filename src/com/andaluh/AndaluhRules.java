@@ -10,15 +10,23 @@ import java.util.regex.Pattern;
 
 public class AndaluhRules {
 
-    private static final Pattern pattern_h = Pattern.compile("");
-    private static final Pattern pattern_x = Pattern.compile("(a|e|i|o|u|á|é|í|ó|ú)(x)(a|e|i|o|u|á|é|í|ó|ú)");
-    private static final Pattern pattern_ch = Pattern.compile("");
-    private static final Pattern pattern_gj = Pattern.compile("");
-    private static final Pattern pattern_v = Pattern.compile("");
-    private static final Pattern pattern_ll = Pattern.compile("");
-    private static final Pattern pattern_l = Pattern.compile("");
-    private static final Pattern pattern_psico_pseudo = Pattern.compile("");
-    private static final Pattern pattern_vaf = Pattern.compile("");
+    private static final Pattern pattern_h_general = Pattern.compile("(\\\\p\\{L})?(?<!c)(h)(\\\\p\\{L}?)");
+    private static final Pattern pattern_h_hua = Pattern.compile("([\\\\p{L}])?(?<!c)(h)(ua)");
+    private static final Pattern pattern_h_hue = Pattern.compile("([\\\\p{L}])?(?<!c)(h)(u)(e)");
+    private static final Pattern pattern_x_starting = Pattern.compile("(?<=^|\\\\s)(x)");
+    private static final Pattern pattern_x = Pattern.compile("([aeiouáéíóú])(x)([aeiouáéíóú])");
+    private static final Pattern pattern_ch = Pattern.compile("ch");
+    private static final Pattern pattern_gj = Pattern.compile("(g(?=[eiéí])|j)([aeiouáéíóú])");
+    private static final Pattern pattern_gue_gui = Pattern.compile("(g)u([eiéí])");
+    private static final Pattern pattern_guue_guui = Pattern.compile("(g)(ü)([eiéí])");
+    private static final Pattern pattern_guen = Pattern.compile("(b)(uen)");
+    private static final Pattern pattern_guel_gues = Pattern.compile("(s|a)?(?<!m)(b)(ue)(l|s)");
+    private static final Pattern pattern_nv = Pattern.compile("nv");
+    private static final Pattern pattern_v = Pattern.compile("v");
+    private static final Pattern pattern_ll = Pattern.compile("ll");
+    private static final Pattern pattern_l = Pattern.compile("(l)([bcçgsdfghkmpqrtxz])");
+    private static final Pattern pattern_psico_pseudo = Pattern.compile("p(sic|seud)");
+    private static final Pattern pattern_vaf = Pattern.compile("(c(?=[eiéíêî])|z|s)([aeiouáéíóúÁÉÍÓÚâêîôûÂÊÎÔÛ])");
     private static final Pattern pattern_word_ending = Pattern.compile("");
     private static final Pattern pattern_digraph = Pattern.compile("");
     private static final Pattern pattern_exception = Pattern.compile("");
