@@ -4,13 +4,19 @@ import javafx.util.Pair;
 
 import java.util.List;
 
+import java.util.regex.MatchResult;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class AndaluhRules {
 
+    private static final Pattern pattern_x = Pattern.compile("(a|e|i|o|u|á|é|í|ó|ú)(x)(a|e|i|o|u|á|é|í|ó|ú)");
+
     // EPA character for Voiceless alveolar fricative /s/ https://en.wikipedia.org/wiki/Voiceless_alveolar_fricative
-    public static final char VAF = 'ç';
+    public static final String VAF = "ç";
 
     // EPA character for Voiceless velar fricative /x/ https://en.wikipedia.org/wiki/Voiceless_velar_fricative
-    public static final char VVF = 'h';
+    public static final String VVF = "h";
 
     // Digraphs producers. (vowel(const(const that triggers the general digraph rule
     public static final String[] DIGRAPHS = {
@@ -107,9 +113,16 @@ public class AndaluhRules {
         return text;
     }
 
+    public static String x_rules_replacer(MatchResult matchResult, String text)
+    {
+        int match = matchResult.start();
+        return text.substring(match,match + 1) + VAF + VAF + text.substring(match + 2, match + 3);
+    }
+
     public static String x_rules (String text)
     {
-        return text;
+        Matcher matcher_x = pattern_x.matcher(text);
+        return matcher_x.replaceAll(matchResult -> x_rules_replacer(matchResult, text));
     }
 
     public static String ch_rules (String text)
