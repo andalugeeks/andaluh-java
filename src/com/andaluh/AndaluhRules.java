@@ -10,7 +10,19 @@ import java.util.regex.Pattern;
 
 public class AndaluhRules {
 
+    private static final Pattern pattern_h = Pattern.compile("");
     private static final Pattern pattern_x = Pattern.compile("(a|e|i|o|u|á|é|í|ó|ú)(x)(a|e|i|o|u|á|é|í|ó|ú)");
+    private static final Pattern pattern_ch = Pattern.compile("");
+    private static final Pattern pattern_gj = Pattern.compile("");
+    private static final Pattern pattern_v = Pattern.compile("");
+    private static final Pattern pattern_ll = Pattern.compile("");
+    private static final Pattern pattern_l = Pattern.compile("");
+    private static final Pattern pattern_psico_pseudo = Pattern.compile("");
+    private static final Pattern pattern_vaf = Pattern.compile("");
+    private static final Pattern pattern_word_ending = Pattern.compile("");
+    private static final Pattern pattern_digraph = Pattern.compile("");
+    private static final Pattern pattern_exception = Pattern.compile("");
+    private static final Pattern pattern_word_interaction = Pattern.compile("");
 
     // EPA character for Voiceless alveolar fricative /s/ https://en.wikipedia.org/wiki/Voiceless_alveolar_fricative
     public static final String VAF = "ç";
