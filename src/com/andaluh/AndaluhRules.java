@@ -8,19 +8,21 @@ import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.andaluh.StringUtils;
+
 public class AndaluhRules {
 
     private static final Pattern pattern_h_general = Pattern.compile("(\\\\p\\{L})?(?<!c)(h)(\\\\p\\{L}?)");
     private static final Pattern pattern_h_hua = Pattern.compile("([\\\\p{L}])?(?<!c)(h)(ua)");
     private static final Pattern pattern_h_hue = Pattern.compile("([\\\\p{L}])?(?<!c)(h)(u)(e)");
-    private static final Pattern pattern_x_starting = Pattern.compile("(?<=^|\\\\s)(x)");
+    private static final Pattern pattern_x_starting = Pattern.compile("(?<=)([xX])([aáeéiíoóuú])");
     private static final Pattern pattern_x = Pattern.compile("([aeiouáéíóú])(x)([aeiouáéíóú])");
     private static final Pattern pattern_ch = Pattern.compile("ch");
     private static final Pattern pattern_gj = Pattern.compile("(g(?=[eiéí])|j)([aeiouáéíóú])");
     private static final Pattern pattern_gue_gui = Pattern.compile("(g)u([eiéí])");
     private static final Pattern pattern_guue_guui = Pattern.compile("(g)(ü)([eiéí])");
     private static final Pattern pattern_guen = Pattern.compile("(b)(uen)");
-    private static final Pattern pattern_guel_gues = Pattern.compile("(s|a)?(?<!m)(b)(ue)(l|s)");
+    private static final Pattern pattern_guel_gues = Pattern.compile("([sa])?(?<!m)(b)(ue)([ls])");
     private static final Pattern pattern_nv = Pattern.compile("nv");
     private static final Pattern pattern_v = Pattern.compile("v");
     private static final Pattern pattern_ll = Pattern.compile("ll");
@@ -34,6 +36,7 @@ public class AndaluhRules {
 
     // EPA character for Voiceless alveolar fricative /s/ https://en.wikipedia.org/wiki/Voiceless_alveolar_fricative
     public static final String VAF = "ç";
+    public static final String VAF_mayus = "Ç";
 
     // EPA character for Voiceless velar fricative /x/ https://en.wikipedia.org/wiki/Voiceless_velar_fricative
     public static final String VVF = "h";
@@ -138,6 +141,13 @@ public class AndaluhRules {
         return text;
     }
 
+    private static String x_starting_rules_replacer(MatchResult matchResult, String text)
+    {
+        int match = matchResult.start();
+        String VAF_correct_capitalization = StringUtils.IsCapitalized(text.substring(match,match+1)) ? VAF_mayus : VAF;
+        return text.substring(match, match) + VAF_correct_capitalization + text.substring(match + 1, match + 2);
+    }
+
     public static String x_rules_replacer(MatchResult matchResult, String text)
     {
         int match = matchResult.start();
@@ -147,7 +157,10 @@ public class AndaluhRules {
     public static String x_rules (String text)
     {
         Matcher matcher_x = pattern_x.matcher(text);
-        return matcher_x.replaceAll(matchResult -> x_rules_replacer(matchResult, text));
+        String x_rules_applied = matcher_x.replaceAll(matchResult -> x_rules_replacer(matchResult, text));
+
+        Matcher matcher_starting_x = pattern_x_starting.matcher(x_rules_applied);
+        return matcher_starting_x.replaceAll(matchResult -> x_starting_rules_replacer(matchResult, x_rules_applied));
     }
 
     public static String ch_rules_replacer(MatchResult matchResult, String text)

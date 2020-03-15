@@ -2,22 +2,22 @@ package com.andaluh;
 
 public class StringUtils {
 
-    Boolean IsUpperCase(String str)
+    static Boolean IsUpperCase(String str)
     {
         return str.toUpperCase().equals(str);
     }
 
-    Boolean IsLowerCase(String str)
+    static Boolean IsLowerCase(String str)
     {
         return str.toLowerCase().equals(str);
     }
 
-    Boolean IsCapitalized(String word)
+    static Boolean IsCapitalized(String word)
     {
         return IsUpperCase(String.valueOf(word.charAt(0))) && IsLowerCase(word.substring(1));
     }
 
-    String Capitalize(String word)
+    static String Capitalize(String word)
     {
         return String.valueOf(word.charAt(0)).toUpperCase() + word.substring(1).toLowerCase();
     }
