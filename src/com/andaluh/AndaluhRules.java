@@ -17,7 +17,7 @@ public class AndaluhRules {
     private static final Pattern pattern_h_hue = Pattern.compile("([\\\\p{L}])?(?<!c)(h)(u)(e)");
     private static final Pattern pattern_x_starting = Pattern.compile("(?<=)([xX])([aáeéiíoóuú])");
     private static final Pattern pattern_x = Pattern.compile("([aeiouáéíóú])(x)([aeiouáéíóú])");
-    private static final Pattern pattern_ch = Pattern.compile("ch");
+    private static final Pattern pattern_ch = Pattern.compile("(?i)ch");
     private static final Pattern pattern_gj = Pattern.compile("(g(?=[eiéí])|j)([aeiouáéíóú])");
     private static final Pattern pattern_gue_gui = Pattern.compile("(g)u([eiéí])");
     private static final Pattern pattern_guue_guui = Pattern.compile("(g)(ü)([eiéí])");
@@ -165,12 +165,15 @@ public class AndaluhRules {
 
     public static String ch_rules_replacer(MatchResult matchResult, String text)
     {
-        return text;
+        int match = matchResult.start();
+        String x_correct_capitalization = StringUtils.IsCapitalized(text.substring(match,match+1)) ? "X" : "x";
+        return text.substring(match, match) + x_correct_capitalization + text.substring(match + 2, match + 2);
     }
 
     public static String ch_rules (String text)
     {
-        return text;
+        Matcher matcher_ch = pattern_ch.matcher(text);
+        return matcher_ch.replaceAll(matchResult -> ch_rules_replacer(matchResult, text));
     }
 
     public static String gj_rules_replacer(MatchResult matchResult, String text)
