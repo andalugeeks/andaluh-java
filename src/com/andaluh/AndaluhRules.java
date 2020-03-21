@@ -25,7 +25,7 @@ public class AndaluhRules {
     private static final Pattern pattern_guel_gues = Pattern.compile("([sa])?(?<!m)(b)(ue)([ls])");
     private static final Pattern pattern_nv = Pattern.compile("nv");
     private static final Pattern pattern_v = Pattern.compile("v");
-    private static final Pattern pattern_ll = Pattern.compile("ll");
+    private static final Pattern pattern_ll = Pattern.compile("(?i)ll");
     private static final Pattern pattern_l = Pattern.compile("(l)([bcçgsdfghkmpqrtxz])");
     private static final Pattern pattern_psico_pseudo = Pattern.compile("p(sic|seud)");
     private static final Pattern pattern_vaf = Pattern.compile("(c(?=[eiéíêî])|z|s)([aeiouáéíóúÁÉÍÓÚâêîôûÂÊÎÔÛ])");
@@ -198,12 +198,15 @@ public class AndaluhRules {
 
     public static String ll_rules_replacer(MatchResult matchResult, String text)
     {
-        return text;
+        int match = matchResult.start();
+        String ll_correct_capitalization = StringUtils.IsCapitalized(text.substring(match,match+1)) ? "Y" : "y";
+        return text.substring(match, match) + ll_correct_capitalization + text.substring(match + 2, match + 2);
     }
 
     public static String ll_rules (String text)
     {
-        return text;
+        Matcher matcher_ll = pattern_ll.matcher(text);
+        return matcher_ll.replaceAll(matchResult -> ll_rules_replacer(matchResult, text));
     }
 
     public static String l_rules_replacer(MatchResult matchResult, String text)
