@@ -16,7 +16,14 @@ public class StringUtils {
     {
         return IsUpperCase(String.valueOf(word.charAt(0))) && IsLowerCase(word.substring(1));
     }
-
+/* //TODO: hacer un IsWordAllCaps para las sustituciones en palabras todo mayus
+    static Boolean IsAllCapitalized(String word)
+    {
+        String word_capitalized = new String(word);
+        word_capitalized = word_capitalized.toUpperCase();
+        return word.contentEquals(word_capitalized);
+    }
+*/
     static String Capitalize(String word)
     {
         return String.valueOf(word.charAt(0)).toUpperCase() + word.substring(1).toLowerCase();

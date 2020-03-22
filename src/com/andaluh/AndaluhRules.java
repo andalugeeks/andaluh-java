@@ -23,8 +23,8 @@ public class AndaluhRules {
     private static final Pattern pattern_guue_guui = Pattern.compile("(g)(ü)([eiéí])");
     private static final Pattern pattern_guen = Pattern.compile("(b)(uen)");
     private static final Pattern pattern_guel_gues = Pattern.compile("([sa])?(?<!m)(b)(ue)([ls])");
-    private static final Pattern pattern_nv = Pattern.compile("nv");
-    private static final Pattern pattern_v = Pattern.compile("v");
+    private static final Pattern pattern_v = Pattern.compile("(?i)v");
+    private static final Pattern pattern_nv = Pattern.compile("(?i)nv");
     private static final Pattern pattern_ll = Pattern.compile("(?i)ll");
     private static final Pattern pattern_l = Pattern.compile("(?i)(l)([bcçgsdfghkmpqrtxz])");
     private static final Pattern pattern_psico_pseudo = Pattern.compile("p(sic|seud)");
@@ -186,14 +186,26 @@ public class AndaluhRules {
         return text;
     }
 
+    public static String nv_rules_replacer(MatchResult matchResult, String text)
+    {
+        int match = matchResult.start();
+        return text.substring(match,match) + "mb" + text.substring(match + 2, match + 2);
+    }
+
     public static String v_rules_replacer(MatchResult matchResult, String text)
     {
-        return text;
+        int match = matchResult.start();
+        String v_correct_capitalization = StringUtils.IsCapitalized(text.substring(match,match+1)) ? "B" : "b";
+        return text.substring(match, match) + v_correct_capitalization + text.substring(match + 2, match + 2);
     }
 
     public static String v_rules (String text)
     {
-        return text;
+        Matcher matcher_nv = pattern_nv.matcher(text);
+        String nv_rules_applied = matcher_nv.replaceAll(matchResult -> nv_rules_replacer(matchResult, text));
+
+        Matcher matcher_v = pattern_v.matcher(nv_rules_applied);
+        return matcher_v.replaceAll(matchResult -> v_rules_replacer(matchResult, nv_rules_applied));
     }
 
     public static String ll_rules_replacer(MatchResult matchResult, String text)
