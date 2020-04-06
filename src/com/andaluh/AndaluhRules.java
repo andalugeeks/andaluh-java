@@ -27,7 +27,7 @@ public class AndaluhRules {
     private static final Pattern pattern_nv = Pattern.compile("(?i)nv");
     private static final Pattern pattern_ll = Pattern.compile("(?i)ll");
     private static final Pattern pattern_l = Pattern.compile("(?i)(l)([bcçgsdfghkmpqrtxz])");
-    private static final Pattern pattern_psico_pseudo = Pattern.compile("p(sic|seud)");
+    private static final Pattern pattern_psico_pseudo = Pattern.compile("(?i)p(sic|seud)");
     private static final Pattern pattern_vaf = Pattern.compile("(?i)(c(?=[eiéíêî])|z|s)([aeiouáéíóúÁÉÍÓÚâêîôûÂÊÎÔÛ])");
     private static final Pattern pattern_word_ending = Pattern.compile("");
     private static final Pattern pattern_digraph = Pattern.compile("");
@@ -262,12 +262,20 @@ public class AndaluhRules {
     }
     public static String psico_pseudo_rules_replacer(MatchResult matchResult, String text)
     {
-        return text;
+        int match = matchResult.start();
+        int matchEnd = matchResult.end();
+        String undetermined_consonant = text.substring(match+1,match + 2);
+        if(text.charAt(match) == 'P' || text.charAt(match) == 'p') {
+            String undetermined_correct_capitalization = text.charAt(match) == 'P' ? undetermined_consonant.toUpperCase() : undetermined_consonant;
+            return undetermined_correct_capitalization + text.substring(match + 2, matchEnd);
+        }
+        else return "";
     }
 
     public static String psico_pseudo_rules (String text)
     {
-        return text;
+        Matcher matcher_psico_pseudo = pattern_psico_pseudo.matcher(text);
+        return matcher_psico_pseudo.replaceAll(matchResult -> psico_pseudo_rules_replacer(matchResult, text));
     }
 
     public static String vaf_rules_replacer(MatchResult matchResult, String text)
