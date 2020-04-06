@@ -12,10 +12,10 @@ import com.andaluh.StringUtils;
 
 public class AndaluhRules {
 
-    private static final Pattern pattern_h_general = Pattern.compile("(\\\\p\\{L})?(?<!c)(h)(\\\\p\\{L}?)");
-    private static final Pattern pattern_h_hua = Pattern.compile("([\\\\p{L}])?(?<!c)(h)(ua)");
-    private static final Pattern pattern_h_hue = Pattern.compile("([\\\\p{L}])?(?<!c)(h)(u)(e)");
-    private static final Pattern pattern_x_starting = Pattern.compile("(?<=)([xX])([aáeéiíoóuú])");
+    private static final Pattern pattern_h_general = Pattern.compile("(?i)(?<!c)(h)([aáeéiíoóuú])");
+    private static final Pattern pattern_h_hua = Pattern.compile("(?i)(?<!c)(h)(ua)");
+    private static final Pattern pattern_h_hue = Pattern.compile("(?i)(?<!c)(h)(u)(e)");
+    private static final Pattern pattern_x_starting = Pattern.compile("([xX])([aáeéiíoóuú])");
     private static final Pattern pattern_x = Pattern.compile("([aeiouáéíóú])(x)([aeiouáéíóú])");
     private static final Pattern pattern_ch = Pattern.compile("(?i)ch");
     private static final Pattern pattern_gj = Pattern.compile("(g(?=[eiéí])|j)([aeiouáéíóú])");
@@ -131,14 +131,41 @@ public class AndaluhRules {
             new Pair<String, String>("as","âh"), new Pair<String, String>("clown","claun"), new Pair<String, String>("crack","crâh"), new Pair<String, String>("down","daun"), new Pair<String, String>("es","êh"), new Pair<String, String>("ex","êh"), new Pair<String, String>("ir","îh"), new Pair<String, String>("miss","mîh"), new Pair<String, String>("muy","mu"), new Pair<String, String>("ôff","off"), new Pair<String, String>("os","ô"), new Pair<String, String>("para","pa"), new Pair<String, String>("ring","rin"), new Pair<String, String>("rock","rôh"), new Pair<String, String>("spray","êppray"), new Pair<String, String>("sprint","êpprín"), new Pair<String, String>("wa","gua")
     );
 
+    public static String h_hue_rules_replacer(MatchResult matchResult, String text)
+    {
+        int match = matchResult.start();
+        String gu_correct_capitalization = StringUtils.IsCapitalized(text.substring(match,match+1)) ? "Gü" : "gü";
+        return gu_correct_capitalization + text.substring(match + 2, match + 3);
+    }
+
+    public static String h_hua_rules_replacer(MatchResult matchResult, String text)
+    {
+        int match = matchResult.start();
+        String g_correct_capitalization = StringUtils.IsCapitalized(text.substring(match,match+1)) ? "G" : "g";
+        return g_correct_capitalization + text.substring(match + 1, match + 3);
+    }
+
     public static String h_rules_replacer(MatchResult matchResult, String text)
     {
-        return text;
+        int match = matchResult.start();
+        String undetermined_vocal = text.substring(match+1,match + 2);
+        if(text.charAt(match) == 'H' || text.charAt(match) == 'h') {
+            String undetermined_correct_capitalization = text.charAt(match) == 'H' ? undetermined_vocal.toUpperCase() : undetermined_vocal;
+            return undetermined_correct_capitalization;
+        }
+        else return "";
     }
 
     public static String h_rules (String text)
     {
-        return text;
+        Matcher matcher_hua = pattern_h_hua.matcher(text);
+        String hua_rules_applied = matcher_hua.replaceAll(matchResult -> h_hua_rules_replacer(matchResult, text));
+
+        Matcher matcher_hue = pattern_h_hue.matcher(hua_rules_applied);
+        String hue_rules_applied = matcher_hue.replaceAll(matchResult -> h_hue_rules_replacer(matchResult, hua_rules_applied));
+
+        Matcher matcher_h_general = pattern_h_general.matcher(hue_rules_applied);
+        return matcher_h_general.replaceAll(matchResult -> h_rules_replacer(matchResult, hue_rules_applied));
     }
 
     private static String x_starting_rules_replacer(MatchResult matchResult, String text)
