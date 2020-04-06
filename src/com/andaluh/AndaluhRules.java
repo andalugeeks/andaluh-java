@@ -18,11 +18,11 @@ public class AndaluhRules {
     private static final Pattern pattern_x_starting = Pattern.compile("([xX])([aáeéiíoóuú])");
     private static final Pattern pattern_x = Pattern.compile("([aeiouáéíóú])(x)([aeiouáéíóú])");
     private static final Pattern pattern_ch = Pattern.compile("(?i)ch");
-    private static final Pattern pattern_gj = Pattern.compile("(g(?=[eiéí])|j)([aeiouáéíóú])");
-    private static final Pattern pattern_gue_gui = Pattern.compile("(g)u([eiéí])");
-    private static final Pattern pattern_guue_guui = Pattern.compile("(g)(ü)([eiéí])");
-    private static final Pattern pattern_guen = Pattern.compile("(b)(uen)");
-    private static final Pattern pattern_guel_gues = Pattern.compile("([sa])?(?<!m)(b)(ue)([ls])");
+    private static final Pattern pattern_gj = Pattern.compile("(?i)(g(?=[eiéí])|j)([aeiouáéíóú])");
+    private static final Pattern pattern_gue_gui = Pattern.compile("(?i)(g)u([eiéí])");
+    private static final Pattern pattern_guue_guui = Pattern.compile("(?i)(g)(ü)([eiéí])");
+    private static final Pattern pattern_guen = Pattern.compile("(?i)(b)(uen)");
+    private static final Pattern pattern_guel_gues = Pattern.compile("(?i)([sa])?(?<!m)(b)(ue)([ls])");
     private static final Pattern pattern_v = Pattern.compile("(?i)v");
     private static final Pattern pattern_nv = Pattern.compile("(?i)nv");
     private static final Pattern pattern_ll = Pattern.compile("(?i)ll");
@@ -40,6 +40,7 @@ public class AndaluhRules {
 
     // EPA character for Voiceless velar fricative /x/ https://en.wikipedia.org/wiki/Voiceless_velar_fricative
     public static final String VVF = "h";
+    public static final String VVF_mayus = "H";
 
     // Digraphs producers. (vowel(const(const that triggers the general digraph rule
     public static final String[] DIGRAPHS = {
@@ -205,12 +206,59 @@ public class AndaluhRules {
 
     public static String gj_rules_replacer(MatchResult matchResult, String text)
     {
-        return text;
+        int match = matchResult.start();
+        String x_correct_capitalization = StringUtils.IsCapitalized(text.substring(match,match+1)) ? VVF_mayus : VVF;
+        return x_correct_capitalization + text.substring(match + 1, match + 2);
+    }
+
+    public static String gue_gui_rules_replacer(MatchResult matchResult, String text)
+    {
+        int match = matchResult.start();
+        int matchEnd = matchResult.end();
+        return text.substring(match, match + 1) + text.substring(match + 2, matchEnd);
+    }
+
+    public static String guue_guui_rules_replacer(MatchResult matchResult, String text)
+    {
+        int match = matchResult.start();
+        int matchEnd = matchResult.end();
+        String u_correct_capitalization = StringUtils.IsCapitalized(text.substring(match + 1,match+2)) ? "U" : "u";
+
+        return text.substring(match, match + 1) + u_correct_capitalization + text.substring(match + 2, matchEnd);
+    }
+
+    public static String guen_rules_replacer(MatchResult matchResult, String text)
+    {
+        int match = matchResult.start();
+        int matchEnd = matchResult.end();
+        String g_correct_capitalization = StringUtils.IsCapitalized(text.substring(match,match+1)) ? "G" : "g";
+        return g_correct_capitalization + text.substring(match + 1, matchEnd);
+    }
+
+    public static String guel_gues_rules_replacer(MatchResult matchResult, String text)
+    {
+        int match = matchResult.start();
+        int matchEnd = matchResult.end();
+        String g_correct_capitalization = StringUtils.IsCapitalized(text.substring(match,match+1)) ? "G" : "g";
+        return g_correct_capitalization + text.substring(match + 1, matchEnd);
     }
 
     public static String gj_rules (String text)
     {
-        return text;
+        Matcher matcher_gj = pattern_gj.matcher(text);
+        String gj_rules_applied = matcher_gj.replaceAll(matchResult -> gj_rules_replacer(matchResult, text));
+
+        Matcher matcher_gue_gui = pattern_gue_gui.matcher(gj_rules_applied);
+        String gue_gui_rules_applied = matcher_gue_gui.replaceAll(matchResult -> gue_gui_rules_replacer(matchResult, gj_rules_applied));
+
+        Matcher matcher_guue_guui = pattern_guue_guui.matcher(gue_gui_rules_applied);
+        String guue_guui_rules_applied = matcher_guue_guui.replaceAll(matchResult -> guue_guui_rules_replacer(matchResult, gue_gui_rules_applied));
+
+        Matcher matcher_guen = pattern_guen.matcher(guue_guui_rules_applied);
+        String guen_rules_applied = matcher_guen.replaceAll(matchResult -> guen_rules_replacer(matchResult, guue_guui_rules_applied));
+
+        Matcher matcher_guel_gues = pattern_guel_gues.matcher(guen_rules_applied);
+        return matcher_guel_gues.replaceAll(matchResult -> guel_gues_rules_replacer(matchResult, guen_rules_applied));
     }
 
     public static String nv_rules_replacer(MatchResult matchResult, String text)
