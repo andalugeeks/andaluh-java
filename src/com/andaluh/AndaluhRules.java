@@ -29,11 +29,15 @@ public class AndaluhRules {
     private static final Pattern pattern_l = Pattern.compile("(?i)(l)([bcçgsdfghkmpqrtxz])");
     private static final Pattern pattern_psico_pseudo = Pattern.compile("(?i)p(sic|seud)");
     private static final Pattern pattern_vaf = Pattern.compile("(?i)(c(?=[eiéíêî])|z|s)([aeiouáéíóúÁÉÍÓÚâêîôûÂÊÎÔÛ])");
-    private static final Pattern pattern_word_ending = Pattern.compile("");
+    private static final Pattern pattern_intervowel_d_end = Pattern.compile("(?i)([aiíÍ])(d)([oa])(s?)");
+    private static final Pattern pattern_eps_end = Pattern.compile("(?i)(e)(ps)");
+    private static final Pattern pattern_d_end = Pattern.compile("(?i)([aeiouáéíóú])(d)");
+    private static final Pattern pattern_s_end = Pattern.compile("(?i)([aeiouáéíóú])(s)");
+    private static final Pattern pattern_const_end = Pattern.compile("(?i)([aeiouáâçéíóú])([bcfgjklprtxz])");
     private static final Pattern pattern_digraph = Pattern.compile("");
     private static final Pattern pattern_exception = Pattern.compile("");
     private static final Pattern pattern_word_interaction = Pattern.compile("");
-
+    private static final Pattern pattern_vocal_tilde = Pattern.compile("(?i)á|é|í|ó|ú");
     // EPA character for Voiceless alveolar fricative /s/ https://en.wikipedia.org/wiki/Voiceless_alveolar_fricative
     public static final String VAF = "ç";
     public static final String VAF_mayus = "Ç";
@@ -60,6 +64,60 @@ public class AndaluhRules {
             "xb", "xc", "xç", "xÇ", "xd", "xf", "xg", "xh", "xl", "xm", "xn", "xp", "xq", "xr", "xt", "xx", "xy",
             "zb", "zc", "zç", "zÇ", "zd", "zf", "zg", "zh", "zl", "zm", "zn", "zp", "zq", "zr", "zt", "zx", "zy"
     };
+
+    public static final List<Pair<String,String>> REPL_RULES  = List.of(
+            new Pair<String, String>("a", "â"),
+            new Pair<String, String>("A", "Â"),
+            new Pair<String, String>("á", "â"),
+            new Pair<String, String>("Á", "Â"),
+
+            new Pair<String, String>("e", "ê"),
+            new Pair<String, String>("E", "Ê"),
+            new Pair<String, String>("é", "ê"),
+            new Pair<String, String>("É", "Ê"),
+
+            new Pair<String, String>("i", "î"),
+            new Pair<String, String>("I", "Î"),
+            new Pair<String, String>("í", "î"),
+            new Pair<String, String>("Í", "Î"),
+
+            new Pair<String, String>("o", "ô"),
+            new Pair<String, String>("O", "Ô"),
+            new Pair<String, String>("ó", "ô"),
+            new Pair<String, String>("Ó", "Ô"),
+
+            new Pair<String, String>("u", "û"),
+            new Pair<String, String>("U", "Û"),
+            new Pair<String, String>("ú", "û"),
+            new Pair<String, String>("Ú", "Û")
+    );
+
+    public static final List<Pair<String,String>> STRESSED_RULES  = List.of(
+            new Pair<String, String>("a", "á"),
+            new Pair<String, String>("A", "Á"),
+            new Pair<String, String>("á", "á"),
+            new Pair<String, String>("Á", "Á"),
+
+            new Pair<String, String>("e", "é"),
+            new Pair<String, String>("E", "É"),
+            new Pair<String, String>("é", "é"),
+            new Pair<String, String>("É", "É"),
+
+            new Pair<String, String>("i", "î"),
+            new Pair<String, String>("I", "Î"),
+            new Pair<String, String>("í", "î"),
+            new Pair<String, String>("Í", "Î"),
+
+            new Pair<String, String>("o", "ô"),
+            new Pair<String, String>("O", "Ô"),
+            new Pair<String, String>("ó", "ô"),
+            new Pair<String, String>("Ó", "Ô"),
+
+            new Pair<String, String>("u", "û"),
+            new Pair<String, String>("U", "Û"),
+            new Pair<String, String>("ú", "û"),
+            new Pair<String, String>("Ú", "Û")
+            );
 
     public static final List<Pair<String,String>> H_RULES_EXCEPT = List.of(
             new Pair<String, String>("haz", "âh"), new Pair<String, String>("hez", "êh"), new Pair<String, String>("hoz", "ôh"),
@@ -339,14 +397,158 @@ public class AndaluhRules {
         return matcher_vaf.replaceAll(matchResult -> vaf_rules_replacer(matchResult, text));
     }
 
-    public static String word_ending_rules_replacer(MatchResult matchResult, String text)
+    public static Boolean contain_vocal_tilde(String text)
     {
-        return text;
+        return pattern_vocal_tilde.matcher(text).find();
+    }
+
+    public static int get_indice_principio_palabra(String text)
+    {
+        int indice = 0;
+        int indiceMax = text.length();
+        char[] caracteresInicioPalabra = {' ', ',', '.', ';', ':', '-', '_', '?', '¿', '(', '"', '\'', '\n', '\r', '['};
+        for(int i = 0; i < caracteresInicioPalabra.length; i++) {
+            indice = Integer.max(text.lastIndexOf(caracteresInicioPalabra[i]), indice);
+        }
+        return indice;
+    }
+
+    public static String get_prefix(MatchResult matchResult, String text)
+    {
+        int match = matchResult.start();
+        int matchEnd = matchResult.end();
+        String prePalabra = text.substring(0, match);
+        int indicePrincipioPalabra = get_indice_principio_palabra(prePalabra);
+        return text.substring(indicePrincipioPalabra, match); // prefix parece ser desde el principio de la palabra hasta el match
+    }
+
+    public static String intervowel_d_end_rules_replacer(MatchResult matchResult, String text)
+    {
+        int match = matchResult.start();
+        int matchEnd = matchResult.end();
+
+        String prefix = get_prefix(matchResult, text);
+
+        String suffix = text.substring(match, matchEnd); // suffix parece ser desde el match hasta el final de la palabra
+
+        if (contain_vocal_tilde(prefix)) return suffix;
+
+        switch (suffix.toLowerCase()) {
+            case "ada":
+                return "á";
+            case "adas":
+                return "âh";
+            case "ado":
+                return "ao";
+            case "ados":
+                return "áôh";
+            case "idos":
+            case "ídos":
+                return "íôh";
+            case "ido":
+            case "ído":
+                return "ío";
+            default:
+                return suffix;
+        }
+    }
+
+    public static String eps_end_rules_replacer(MatchResult matchResult, String text)
+    {
+            //  Leave as it is. There shouldn't be any word with -eps ending without accent.
+        int match = matchResult.start();
+        int matchEnd = matchResult.end();
+
+        String prefix = get_prefix(matchResult, text);
+
+        String suffix = text.substring(match, matchEnd); // suffix parece ser desde el match hasta el final de la palabra
+
+        if (!contain_vocal_tilde(prefix)) return suffix;
+        return "ê";
+    }
+
+    public static String d_end_rules_replacer(MatchResult matchResult, String text)
+    {
+        int match = matchResult.start();
+        int matchEnd = matchResult.end();
+
+        String prefix = get_prefix(matchResult, text);
+
+        String suffix = text.substring(match, matchEnd); // suffix parece ser desde el match hasta el final de la palabra
+
+        if (contain_vocal_tilde(prefix)) {
+            String vocal = Character.toString(suffix.charAt(0));
+            return apply_repl_rules(vocal); //TODO
+        }
+        char[] vocalesValidas = {'a', 'e', 'A', 'E', 'á', 'é', 'Á', 'É'};
+
+        for(int i = 0; i < vocalesValidas.length; i++)
+        {
+            if(vocalesValidas[i] == suffix.charAt(0))
+            {
+                return apply_stressed_rules(Character.toString(suffix.charAt(0))); //TODO
+            }
+        }
+
+
+        return apply_stressed_rules(Character.toString(suffix.charAt(0))) + "h"; //TODO
+    }
+
+    private static String apply_repl_rules(String vocal) {
+        return vocal;
+    }
+
+    private static String apply_stressed_rules(String vocal) {
+        return vocal;
+    }
+
+    public static String s_end_rules_replacer(MatchResult matchResult, String text)
+    {
+        int match = matchResult.start();
+        int matchEnd = matchResult.end();
+
+        String prefix = get_prefix(matchResult, text);
+
+        String suffix = text.substring(match, matchEnd);
+
+        if (!contain_vocal_tilde(Character.toString(suffix.charAt(0)))) {
+            return apply_repl_rules(Character.toString(suffix.charAt(0))); //TODO
+        }
+
+        return apply_repl_rules(Character.toString(suffix.charAt(0))) + "h"; //TODO
+    }
+
+    public static String const_end_rules_replacer(MatchResult matchResult, String text)
+    {
+        int match = matchResult.start();
+        int matchEnd = matchResult.end();
+
+        String prefix = get_prefix(matchResult, text);
+
+        String suffix = text.substring(match, matchEnd);
+        if (contain_vocal_tilde(prefix)) {
+            return apply_repl_rules(Character.toString(suffix.charAt(0))); //TODO
+        }
+
+        return apply_repl_rules(Character.toString(suffix.charAt(0))) + "h"; //TODO
     }
 
     public static String word_ending_rules (String text)
     {
-        return text;
+        Matcher matcher_intervowel_d_end = pattern_intervowel_d_end.matcher(text);
+        String intervowel_d_end_rules_applied = matcher_intervowel_d_end.replaceAll(matchResult -> intervowel_d_end_rules_replacer(matchResult, text));
+
+        Matcher matcher_eps_end = pattern_eps_end.matcher(intervowel_d_end_rules_applied);
+        String eps_end_rules_applied = matcher_eps_end.replaceAll(matchResult -> eps_end_rules_replacer(matchResult, intervowel_d_end_rules_applied));
+
+        Matcher matcher_d_end = pattern_d_end.matcher(eps_end_rules_applied);
+        String d_end_rules_applied = matcher_d_end.replaceAll(matchResult -> d_end_rules_replacer(matchResult, eps_end_rules_applied));
+
+        Matcher matcher_s_end = pattern_s_end.matcher(d_end_rules_applied);
+        String s_end_rules_applied = matcher_s_end.replaceAll(matchResult -> s_end_rules_replacer(matchResult, d_end_rules_applied));
+
+        Matcher matcher_const_end = pattern_const_end.matcher(s_end_rules_applied);
+        return matcher_const_end.replaceAll(matchResult -> const_end_rules_replacer(matchResult, s_end_rules_applied));
     }
 
     public static String digraph_rules_replacer(MatchResult matchResult, String text)
