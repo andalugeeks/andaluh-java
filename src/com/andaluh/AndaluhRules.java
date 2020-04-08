@@ -2,7 +2,7 @@ package com.andaluh;
 
 import javafx.util.Pair;
 
-import java.util.List;
+import java.util.*;
 
 import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
@@ -29,11 +29,11 @@ public class AndaluhRules {
     private static final Pattern pattern_l = Pattern.compile("(?i)(l)([bcçgsdfghkmpqrtxz])");
     private static final Pattern pattern_psico_pseudo = Pattern.compile("(?i)p(sic|seud)");
     private static final Pattern pattern_vaf = Pattern.compile("(?i)(c(?=[eiéíêî])|z|s)([aeiouáéíóúÁÉÍÓÚâêîôûÂÊÎÔÛ])");
-    private static final Pattern pattern_intervowel_d_end = Pattern.compile("(?i)([aiíÍ])(d)([oa])(s?)");
+    private static final Pattern pattern_intervowel_d_end = Pattern.compile("(?i)([aiíÍ])(d)([oa])(s?)\\b");
     private static final Pattern pattern_eps_end = Pattern.compile("(?i)(e)(ps)");
-    private static final Pattern pattern_d_end = Pattern.compile("(?i)([aeiouáéíóú])(d)");
-    private static final Pattern pattern_s_end = Pattern.compile("(?i)([aeiouáéíóú])(s)");
-    private static final Pattern pattern_const_end = Pattern.compile("(?i)([aeiouáâçéíóú])([bcfgjklprtxz])");
+    private static final Pattern pattern_d_end = Pattern.compile("(?i)([aeiouáéíóú])(d)\\b");
+    private static final Pattern pattern_s_end = Pattern.compile("(?i)([aeiouáéíóú])(s)\\b");
+    private static final Pattern pattern_const_end = Pattern.compile("(?i)([aeiouáâçéíóú])([bcfgjklprtxz](\b))");
     private static final Pattern pattern_digraph = Pattern.compile("");
     private static final Pattern pattern_exception = Pattern.compile("");
     private static final Pattern pattern_word_interaction = Pattern.compile("");
@@ -65,59 +65,65 @@ public class AndaluhRules {
             "zb", "zc", "zç", "zÇ", "zd", "zf", "zg", "zh", "zl", "zm", "zn", "zp", "zq", "zr", "zt", "zx", "zy"
     };
 
-    public static final List<Pair<String,String>> REPL_RULES  = List.of(
-            new Pair<String, String>("a", "â"),
-            new Pair<String, String>("A", "Â"),
-            new Pair<String, String>("á", "â"),
-            new Pair<String, String>("Á", "Â"),
+    public static final Map<String,String> REPL_RULES = new HashMap<String,String>()
+    {
+        {
+            put("a", "â");
+            put("A", "Â");
+            put("á", "â");
+            put("Á", "Â");
 
-            new Pair<String, String>("e", "ê"),
-            new Pair<String, String>("E", "Ê"),
-            new Pair<String, String>("é", "ê"),
-            new Pair<String, String>("É", "Ê"),
+            put("e", "ê");
+            put("E", "Ê");
+            put("é", "ê");
+            put("É", "Ê");
 
-            new Pair<String, String>("i", "î"),
-            new Pair<String, String>("I", "Î"),
-            new Pair<String, String>("í", "î"),
-            new Pair<String, String>("Í", "Î"),
+            put("i", "î");
+            put("I", "Î");
+            put("í", "î");
+            put("Í", "Î");
 
-            new Pair<String, String>("o", "ô"),
-            new Pair<String, String>("O", "Ô"),
-            new Pair<String, String>("ó", "ô"),
-            new Pair<String, String>("Ó", "Ô"),
+            put("o", "ô");
+            put("O", "Ô");
+            put("ó", "ô");
+            put("Ó", "Ô");
 
-            new Pair<String, String>("u", "û"),
-            new Pair<String, String>("U", "Û"),
-            new Pair<String, String>("ú", "û"),
-            new Pair<String, String>("Ú", "Û")
-    );
+            put("u", "û");
+            put("U", "Û");
+            put("ú", "û");
+            put("Ú", "Û");
+        }
+    };
 
-    public static final List<Pair<String,String>> STRESSED_RULES  = List.of(
-            new Pair<String, String>("a", "á"),
-            new Pair<String, String>("A", "Á"),
-            new Pair<String, String>("á", "á"),
-            new Pair<String, String>("Á", "Á"),
+    public static final Map<String,String> STRESSED_RULES  = new HashMap<String,String>()
+    {
+        {
+            put("a", "á");
+            put("A", "Á");
+            put("á", "á");
+            put("Á", "Á");
 
-            new Pair<String, String>("e", "é"),
-            new Pair<String, String>("E", "É"),
-            new Pair<String, String>("é", "é"),
-            new Pair<String, String>("É", "É"),
+            put("e", "é");
+            put("E", "É");
+            put("é", "é");
+            put("É", "É");
 
-            new Pair<String, String>("i", "î"),
-            new Pair<String, String>("I", "Î"),
-            new Pair<String, String>("í", "î"),
-            new Pair<String, String>("Í", "Î"),
+            put("i", "î");
+            put("I", "Î");
+            put("í", "î");
+            put("Í", "Î");
 
-            new Pair<String, String>("o", "ô"),
-            new Pair<String, String>("O", "Ô"),
-            new Pair<String, String>("ó", "ô"),
-            new Pair<String, String>("Ó", "Ô"),
+            put("o", "ô");
+            put("O", "Ô");
+            put("ó", "ô");
+            put("Ó", "Ô");
 
-            new Pair<String, String>("u", "û"),
-            new Pair<String, String>("U", "Û"),
-            new Pair<String, String>("ú", "û"),
-            new Pair<String, String>("Ú", "Û")
-            );
+            put("u", "û");
+            put("U", "Û");
+            put("ú", "û");
+            put("Ú", "Û");
+        }
+    };
 
     public static final List<Pair<String,String>> H_RULES_EXCEPT = List.of(
             new Pair<String, String>("haz", "âh"), new Pair<String, String>("hez", "êh"), new Pair<String, String>("hoz", "ôh"),
@@ -209,8 +215,7 @@ public class AndaluhRules {
         int match = matchResult.start();
         String undetermined_vocal = text.substring(match+1,match + 2);
         if(text.charAt(match) == 'H' || text.charAt(match) == 'h') {
-            String undetermined_correct_capitalization = text.charAt(match) == 'H' ? undetermined_vocal.toUpperCase() : undetermined_vocal;
-            return undetermined_correct_capitalization;
+            return text.charAt(match) == 'H' ? undetermined_vocal.toUpperCase() : undetermined_vocal;
         }
         else return "";
     }
@@ -402,13 +407,16 @@ public class AndaluhRules {
         return pattern_vocal_tilde.matcher(text).find();
     }
 
+    private static final char[] caracteresNoPalabra = {' ', ',', '.', ';', ':', '-', '_', '?', '¿', '(', '"', '\'', '\n', '\r', '['};
+
     public static int get_indice_principio_palabra(String text)
     {
         int indice = 0;
         int indiceMax = text.length();
-        char[] caracteresInicioPalabra = {' ', ',', '.', ';', ':', '-', '_', '?', '¿', '(', '"', '\'', '\n', '\r', '['};
-        for(int i = 0; i < caracteresInicioPalabra.length; i++) {
-            indice = Integer.max(text.lastIndexOf(caracteresInicioPalabra[i]), indice);
+        for (char c : caracteresNoPalabra) {
+            int indiceCandidato = text.lastIndexOf(c);
+            if(indiceCandidato < 0 || indiceCandidato > indiceMax) continue;
+            indice = Integer.max(indiceCandidato, indice);
         }
         return indice;
     }
@@ -419,7 +427,7 @@ public class AndaluhRules {
         int matchEnd = matchResult.end();
         String prePalabra = text.substring(0, match);
         int indicePrincipioPalabra = get_indice_principio_palabra(prePalabra);
-        return text.substring(indicePrincipioPalabra, match); // prefix parece ser desde el principio de la palabra hasta el match
+        return text.substring(indicePrincipioPalabra, match);
     }
 
     public static String intervowel_d_end_rules_replacer(MatchResult matchResult, String text)
@@ -429,7 +437,7 @@ public class AndaluhRules {
 
         String prefix = get_prefix(matchResult, text);
 
-        String suffix = text.substring(match, matchEnd); // suffix parece ser desde el match hasta el final de la palabra
+        String suffix = text.substring(match, matchEnd);
 
         if (contain_vocal_tilde(prefix)) return suffix;
 
@@ -455,13 +463,12 @@ public class AndaluhRules {
 
     public static String eps_end_rules_replacer(MatchResult matchResult, String text)
     {
-            //  Leave as it is. There shouldn't be any word with -eps ending without accent.
         int match = matchResult.start();
         int matchEnd = matchResult.end();
 
         String prefix = get_prefix(matchResult, text);
 
-        String suffix = text.substring(match, matchEnd); // suffix parece ser desde el match hasta el final de la palabra
+        String suffix = text.substring(match, matchEnd);
 
         if (!contain_vocal_tilde(prefix)) return suffix;
         return "ê";
@@ -474,32 +481,29 @@ public class AndaluhRules {
 
         String prefix = get_prefix(matchResult, text);
 
-        String suffix = text.substring(match, matchEnd); // suffix parece ser desde el match hasta el final de la palabra
+        String suffix = text.substring(match, matchEnd);
 
+        char vocalCandidata = suffix.charAt(0);
         if (contain_vocal_tilde(prefix)) {
-            String vocal = Character.toString(suffix.charAt(0));
-            return apply_repl_rules(vocal); //TODO
+            return apply_repl_rules(Character.toString(vocalCandidata));
         }
-        char[] vocalesValidas = {'a', 'e', 'A', 'E', 'á', 'é', 'Á', 'É'};
 
-        for(int i = 0; i < vocalesValidas.length; i++)
-        {
-            if(vocalesValidas[i] == suffix.charAt(0))
-            {
-                return apply_stressed_rules(Character.toString(suffix.charAt(0))); //TODO
+        char[] vocalesValidas = {'a', 'e', 'A', 'E', 'á', 'é', 'Á', 'É'};
+        for (char vocalValida : vocalesValidas) {
+            if (vocalValida == vocalCandidata) {
+                return apply_stressed_rules(Character.toString(vocalCandidata));
             }
         }
 
-
-        return apply_stressed_rules(Character.toString(suffix.charAt(0))) + "h"; //TODO
+        return apply_stressed_rules(Character.toString(vocalCandidata)) + "h";
     }
 
     private static String apply_repl_rules(String vocal) {
-        return vocal;
+        return REPL_RULES.get(vocal);
     }
 
     private static String apply_stressed_rules(String vocal) {
-        return vocal;
+        return STRESSED_RULES.get(vocal);
     }
 
     public static String s_end_rules_replacer(MatchResult matchResult, String text)
@@ -512,10 +516,10 @@ public class AndaluhRules {
         String suffix = text.substring(match, matchEnd);
 
         if (!contain_vocal_tilde(Character.toString(suffix.charAt(0)))) {
-            return apply_repl_rules(Character.toString(suffix.charAt(0))); //TODO
+            return apply_repl_rules(Character.toString(suffix.charAt(0)));
         }
 
-        return apply_repl_rules(Character.toString(suffix.charAt(0))) + "h"; //TODO
+        return apply_repl_rules(Character.toString(suffix.charAt(0))) + "h";
     }
 
     public static String const_end_rules_replacer(MatchResult matchResult, String text)
@@ -527,10 +531,10 @@ public class AndaluhRules {
 
         String suffix = text.substring(match, matchEnd);
         if (contain_vocal_tilde(prefix)) {
-            return apply_repl_rules(Character.toString(suffix.charAt(0))); //TODO
+            return apply_repl_rules(Character.toString(suffix.charAt(0)));
         }
 
-        return apply_repl_rules(Character.toString(suffix.charAt(0))) + "h"; //TODO
+        return apply_repl_rules(Character.toString(suffix.charAt(0))) + "h";
     }
 
     public static String word_ending_rules (String text)
