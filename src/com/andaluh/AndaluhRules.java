@@ -7,11 +7,30 @@ import java.util.*;
 import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import com.andaluh.StringUtils;
 
 public class AndaluhRules {
 
+    // Digraphs producers. (vowel(const(const that triggers the general digraph rule
+    public static final String[] DIGRAPHS = {
+            "bb", "bc", "bç", "bÇ", "bd", "bf", "bg", "bh", "bm", "bn", "bp", "bq", "bt", "bx", "by", "cb", "cc",
+            "cç", "cÇ", "cd", "cf", "cg", "ch", "cm", "cn", "cp", "cq", "ct", "cx", "cy",
+            "db", "dc", "dç", "dÇ", "dd", "df", "dg", "dh", "dl", "dm", "dn", "dp", "dq", "dt", "dx", "dy",
+            "fb", "fc", "fç", "fÇ", "fd", "ff", "fg", "fh", "fm", "fn", "fp", "fq", "ft", "fx", "fy",
+            "gb", "gc", "gç", "gÇ", "gd", "gf", "gg", "gh", "gm", "gn", "gp", "gq", "gt", "gx", "gy",
+            "jb", "jc", "jç", "jÇ", "jd", "jf", "jg", "jh", "jl", "jm", "jn", "jp", "jq", "jr", "jt", "jx", "jy",
+            "lb", "lc", "lç", "lÇ", "ld", "lf", "lg", "lh", "ll", "lm", "ln", "lp", "lq", "lr", "lt", "lx", "ly",
+            "mm", "mn",
+            "nm", "nn",
+            "pb", "pc", "pç", "pÇ", "pd", "pf", "pg", "ph", "pm", "pn", "pp", "pq", "pt", "px", "py",
+            "rn",
+            "sb", "sc", "sç", "sÇ", "sd", "sf", "sg", "sh", "sk", "sl", "sm", "sn", "sñ", "sp", "sq", "sr", "st", "sx", "sy",
+            "tb", "tc", "tç", "tÇ", "td", "tf", "tg", "th", "tl", "tm", "tn", "tp", "tq", "tt", "tx", "ty",
+            "xb", "xc", "xç", "xÇ", "xd", "xf", "xg", "xh", "xl", "xm", "xn", "xp", "xq", "xr", "xt", "xx", "xy",
+            "zb", "zc", "zç", "zÇ", "zd", "zf", "zg", "zh", "zl", "zm", "zn", "zp", "zq", "zr", "zt", "zx", "zy"
+    };
     private static final Pattern pattern_h_general = Pattern.compile("(?i)(?<!c)(h)([aáeéiíoóuú])");
     private static final Pattern pattern_h_hua = Pattern.compile("(?i)(?<!c)(h)(ua)");
     private static final Pattern pattern_h_hue = Pattern.compile("(?i)(?<!c)(h)(u)(e)");
@@ -33,11 +52,16 @@ public class AndaluhRules {
     private static final Pattern pattern_eps_end = Pattern.compile("(?i)(e)(ps)");
     private static final Pattern pattern_d_end = Pattern.compile("(?i)([aeiouáéíóú])(d)\\b");
     private static final Pattern pattern_s_end = Pattern.compile("(?i)([aeiouáéíóú])(s)\\b");
-    private static final Pattern pattern_const_end = Pattern.compile("(?i)([aeiouáâçéíóú])([bcfgjklprtxz](\b))");
-    private static final Pattern pattern_digraph = Pattern.compile("");
+    private static final Pattern pattern_const_end = Pattern.compile("(?i)([aeiouáâçéíóú])([bcfgjklprtxz]\\b)");
+    private static final Pattern pattern_digraph_special_1 = Pattern.compile("(?i)([aeiouáéíóú])([lr])s(t)");
+    private static final Pattern pattern_digraph_special_2 = Pattern.compile("(?i)(tr|p)([ao])(?:ns|st)([bcçdfghjklmnpqstvwxyz])");
+    private static final Pattern pattern_digraph_special_3 = Pattern.compile("(?i)([aeiouáéíóú])([bdnr])(s)([bcçdfghjklmnpqstvwxyz])");
+    private static final Pattern pattern_digraph_special_4 = Pattern.compile("(?i)([aeiouáéíóú])[djrstxz](l)");
+    private static final Pattern pattern_digraph_general = Pattern.compile("(?i)([aeiouáéíóú])(" + String.join("|", DIGRAPHS)+ ")");
     private static final Pattern pattern_exception = Pattern.compile("");
     private static final Pattern pattern_word_interaction = Pattern.compile("");
     private static final Pattern pattern_vocal_tilde = Pattern.compile("(?i)á|é|í|ó|ú");
+
     // EPA character for Voiceless alveolar fricative /s/ https://en.wikipedia.org/wiki/Voiceless_alveolar_fricative
     public static final String VAF = "ç";
     public static final String VAF_mayus = "Ç";
@@ -46,24 +70,6 @@ public class AndaluhRules {
     public static final String VVF = "h";
     public static final String VVF_mayus = "H";
 
-    // Digraphs producers. (vowel(const(const that triggers the general digraph rule
-    public static final String[] DIGRAPHS = {
-            "bb", "bc", "bç", "bÇ", "bd", "bf", "bg", "bh", "bm", "bn", "bp", "bq", "bt", "bx", "by", "cb", "cc",
-            "cç", "cÇ", "cd", "cf", "cg", "ch", "cm", "cn", "cp", "cq", "ct", "cx", "cy",
-            "db", "dc", "dç", "dÇ", "dd", "df", "dg", "dh", "dl", "dm", "dn", "dp", "dq", "dt", "dx", "dy",
-            "fb", "fc", "fç", "fÇ", "fd", "ff", "fg", "fh", "fm", "fn", "fp", "fq", "ft", "fx", "fy",
-            "gb", "gc", "gç", "gÇ", "gd", "gf", "gg", "gh", "gm", "gn", "gp", "gq", "gt", "gx", "gy",
-            "jb", "jc", "jç", "jÇ", "jd", "jf", "jg", "jh", "jl", "jm", "jn", "jp", "jq", "jr", "jt", "jx", "jy",
-            "lb", "lc", "lç", "lÇ", "ld", "lf", "lg", "lh", "ll", "lm", "ln", "lp", "lq", "lr", "lt", "lx", "ly",
-            "mm", "mn",
-            "nm", "nn",
-            "pb", "pc", "pç", "pÇ", "pd", "pf", "pg", "ph", "pm", "pn", "pp", "pq", "pt", "px", "py",
-            "rn",
-            "sb", "sc", "sç", "sÇ", "sd", "sf", "sg", "sh", "sk", "sl", "sm", "sn", "sñ", "sp", "sq", "sr", "st", "sx", "sy",
-            "tb", "tc", "tç", "tÇ", "td", "tf", "tg", "th", "tl", "tm", "tn", "tp", "tq", "tt", "tx", "ty",
-            "xb", "xc", "xç", "xÇ", "xd", "xf", "xg", "xh", "xl", "xm", "xn", "xp", "xq", "xr", "xt", "xx", "xy",
-            "zb", "zc", "zç", "zÇ", "zd", "zf", "zg", "zh", "zl", "zm", "zn", "zp", "zq", "zr", "zt", "zx", "zy"
-    };
 
     public static final Map<String,String> REPL_RULES = new HashMap<String,String>()
     {
@@ -555,14 +561,99 @@ public class AndaluhRules {
         return matcher_const_end.replaceAll(matchResult -> const_end_rules_replacer(matchResult, s_end_rules_applied));
     }
 
-    public static String digraph_rules_replacer(MatchResult matchResult, String text)
+
+    public static String digraph_special1_rules_replacer(MatchResult matchResult, String text)
     {
-        return text;
+        int match = matchResult.start();
+        int matchEnd = matchResult.end();
+
+        char l_or_r = text.charAt(match + 1);
+        switch (l_or_r)
+        {
+            case 'l':
+                return text.substring(match, match + 1) + "rtt";
+            case 'r':
+                return text.substring(match, match + 2) + "tt";
+            default:
+                return text.substring(match, matchEnd);
+        }
+    }
+
+    public static String digraph_special2_rules_replacer(MatchResult matchResult, String text)
+    {
+        String init_char = matchResult.group(1);
+        char vowel_char = matchResult.group(2).charAt(0);
+        char cons_char = matchResult.group(0).charAt(matchResult.group(0).length() - 1);
+
+        if(Character.toLowerCase(cons_char) == 'l')
+            return init_char + apply_repl_rules(Character.toString(vowel_char)) + cons_char + "-" + cons_char;
+        else
+            return init_char + apply_repl_rules(Character.toString(vowel_char)) + cons_char + cons_char;
+    }
+
+    public static String digraph_special3_rules_replacer(MatchResult matchResult, String text)
+    {
+        int match = matchResult.start();
+        int matchEnd = matchResult.end();
+        char vowel_char = text.charAt(match);
+        char cons_char = text.charAt(match + 1);
+        char s_char = text.charAt(match + 2);
+        char digraph_char = text.charAt(matchEnd - 1);
+
+        System.out.println(vowel_char + "/" + cons_char + "/"  + s_char + "/" + digraph_char);
+
+        if(Character.toLowerCase(cons_char) == 'r' && Character.toLowerCase(s_char) == 's')
+        {
+            return Character.toString(vowel_char) + Character.toString(cons_char) + digraph_char + digraph_char;
+        }
+        else
+        {
+            return apply_repl_rules(Character.toString(vowel_char)) + digraph_char + digraph_char;
+        }
+    }
+
+    public static String digraph_special4_rules_replacer(MatchResult matchResult, String text)
+    {
+        int match = matchResult.start();
+        int matchEnd = matchResult.end();
+        char vowel_char = text.charAt(match);
+        char digraph_char = text.charAt(matchEnd - 1);
+
+        return  apply_repl_rules(Character.toString(vowel_char)) + digraph_char + "-" + digraph_char;
+    }
+
+    public static String digraph_general_rules_replacer(MatchResult matchResult, String text)
+    {
+        int match = matchResult.start();
+        int matchEnd = matchResult.end();
+        char vowel_char = text.charAt(match);
+        char digraph_char = text.charAt(matchEnd - 1);
+
+        return apply_repl_rules(Character.toString(vowel_char)) + digraph_char + digraph_char;
     }
 
     public static String digraph_rules (String text)
     {
-        return text;
+        System.out.println("Input:" + text);
+
+        Matcher matcher_digraph_special1 = pattern_digraph_special_1.matcher(text);
+        String digraph_special1_rules_applied = matcher_digraph_special1.replaceAll(matchResult -> digraph_special1_rules_replacer(matchResult, text));
+        System.out.println("1:" + digraph_special1_rules_applied);
+
+        Matcher matcher_digraph_special2 = pattern_digraph_special_2.matcher(digraph_special1_rules_applied);
+        String digraph_special2_rules_applied = matcher_digraph_special2.replaceAll(matchResult -> digraph_special2_rules_replacer(matchResult, digraph_special1_rules_applied));
+        System.out.println("2:" + digraph_special2_rules_applied);
+
+        Matcher matcher_digraph_special3 = pattern_digraph_special_3.matcher(digraph_special2_rules_applied);
+        String digraph_special3_rules_applied = matcher_digraph_special3.replaceAll(matchResult -> digraph_special3_rules_replacer(matchResult, digraph_special2_rules_applied));
+        System.out.println("3:" + digraph_special3_rules_applied);
+
+        Matcher matcher_digraph_special4 = pattern_digraph_special_4.matcher(digraph_special3_rules_applied);
+        String digraph_special4_rules_applied = matcher_digraph_special4.replaceAll(matchResult -> digraph_special4_rules_replacer(matchResult, digraph_special3_rules_applied));
+        System.out.println("4:" + digraph_special4_rules_applied);
+
+        Matcher matcher_digraph_general = pattern_digraph_general.matcher(digraph_special4_rules_applied);
+        return matcher_digraph_general.replaceAll(matchResult -> digraph_general_rules_replacer(matchResult, digraph_special4_rules_applied));
     }
 
     public static String exception_rules_replacer(MatchResult matchResult, String text)
