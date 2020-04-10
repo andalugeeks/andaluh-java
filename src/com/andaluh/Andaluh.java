@@ -6,24 +6,20 @@ import static java.nio.charset.StandardCharsets.*;
 
 public class Andaluh {
 
-    public static String transliterate(String text)
-    {
+    public static String transliterate(String text) {
         return TransliterateString(text);
     }
 
-    public static String transliterate(String[] text)
-    {
+    public static String transliterate(String[] text) {
         String[] textOut = new String[text.length];
-        for (int i = 0; i < text.length; i++)
-        {
+        for (int i = 0; i < text.length; i++) {
             textOut[i] = TransliterateString(text[i]);
         }
 
         return JoinStrings(textOut);
     }
 
-    public static String TransliterateString(String palabra)
-    {
+    public static String TransliterateString(String palabra) {
         palabra = AndaluhRules.h_rules(palabra);
         palabra = AndaluhRules.x_rules(palabra);
         palabra = AndaluhRules.ch_rules(palabra);
@@ -42,11 +38,9 @@ public class Andaluh {
         return palabra;
     }
 
-    public static String transliterate(String[] text, boolean[] ignores)
-    {
+    public static String transliterate(String[] text, boolean[] ignores) {
         String[] textOut = new String[text.length];
-        for (int i = 0; i < text.length; i++)
-        {
+        for (int i = 0; i < text.length; i++) {
             textOut[i] = ignores[i] ? text[i] : TransliterateString(text[i]);
         }
 
@@ -55,17 +49,16 @@ public class Andaluh {
 
     public static String JoinStrings(String[] text) {
         StringBuilder stringBuilder = new StringBuilder();
-        for(String strText : text) {
+        for (String strText : text) {
             stringBuilder.append(strText);
         }
         return stringBuilder.toString();
     }
 
 
-    public static String epa(String textoEspanyol, char charCedilla, char charJejeo, boolean escapeLinks, boolean debug)
-    {
+    public static String epa(String textoEspanyol, char charCedilla, char charJejeo, boolean escapeLinks, boolean debug) {
 
-        if(textoEspanyol == null || textoEspanyol.isEmpty() || textoEspanyol.isBlank()) return "";
+        if (textoEspanyol == null || textoEspanyol.isEmpty() || textoEspanyol.isBlank()) return "";
 
         byte[] byteArrayAux = textoEspanyol.getBytes();
         String textoEspanyolUTF8 = new String(byteArrayAux, UTF_8);
@@ -90,8 +83,7 @@ public class Andaluh {
         */
 
         String[] tags;
-        if (escapeLinks)
-        {
+        if (escapeLinks) {
 
             String[] textoEspanyolUTF8_splitted = textoEspanyolUTF8.split("(?<=-)|(?<= )|(?<=,)|(?<=;)|(?<=:)|(?<=\\.)");
 
@@ -101,29 +93,24 @@ public class Andaluh {
             String text_and = transliterate(textoEspanyolUTF8_splitted, ignores);
 
             return text_and;
-        }
-        else
-        {
+        } else {
             return transliterate(textoEspanyolUTF8);
         }
 
     }
 
-    public static boolean[] GetIgnores(String[] text)
-    {
+    public static boolean[] GetIgnores(String[] text) {
         boolean[] ignores = new boolean[text.length];
         Arrays.fill(ignores, false); //TODO: iterate through all strings and set its boolean
         return ignores;
     }
 
 
-    public static String epa(String textoEspanyol, char charCedilla, char charJejeo, boolean escapeLinks)
-    {
+    public static String epa(String textoEspanyol, char charCedilla, char charJejeo, boolean escapeLinks) {
         return epa(textoEspanyol, charCedilla, charJejeo, escapeLinks, false);
     }
 
-    public static String epa(String textoEspanyol, char charCedilla, char charJejeo)
-    {
+    public static String epa(String textoEspanyol, char charCedilla, char charJejeo) {
         return epa(textoEspanyol, charCedilla, charJejeo, false, false);
     }
 

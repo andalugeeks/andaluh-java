@@ -2,30 +2,27 @@ package com.andaluh;
 
 public class StringUtils {
 
-    static Boolean IsUpperCase(String str)
-    {
+    static Boolean IsUpperCase(String str) {
         return str.toUpperCase().equals(str);
     }
 
-    static Boolean IsLowerCase(String str)
-    {
+    static Boolean IsLowerCase(String str) {
         return str.toLowerCase().equals(str);
     }
 
-    static Boolean IsCapitalized(String word)
-    {
+    static Boolean IsCapitalized(String word) {
         return IsUpperCase(String.valueOf(word.charAt(0))) && IsLowerCase(word.substring(1));
     }
-/* //TODO: hacer un IsWordAllCaps para las sustituciones en palabras todo mayus
-    static Boolean IsAllCapitalized(String word)
-    {
-        String word_capitalized = new String(word);
-        word_capitalized = word_capitalized.toUpperCase();
-        return word.contentEquals(word_capitalized);
-    }
-*/
-    static String Capitalize(String word)
-    {
+
+    /* //TODO: hacer un IsWordAllCaps para las sustituciones en palabras todo mayus
+        static Boolean IsAllCapitalized(String word)
+        {
+            String word_capitalized = new String(word);
+            word_capitalized = word_capitalized.toUpperCase();
+            return word.contentEquals(word_capitalized);
+        }
+    */
+    static String Capitalize(String word) {
         return String.valueOf(word.charAt(0)).toUpperCase() + word.substring(1).toLowerCase();
     }
 
@@ -38,12 +35,11 @@ public class StringUtils {
         return replacement_word;
     }
 
-// Useful to calculate the circumflex equivalents.
+    // Useful to calculate the circumflex equivalents.
     public static final String VOWELS_ALL_NOTILDE = "aeiouâêîôûAEIOUÂÊÎÔÛ";
     public static final String VOWELS_ALL_TILDE = "áéíóúâêîôûÁÉÍÓÚÂÊÎÔÛ";
 
-    char GetVowelTilde(char vowel)
-    {
+    char GetVowelTilde(char vowel) {
         final int i = VOWELS_ALL_NOTILDE.indexOf(vowel);
         // If no tilde, replace with circumflex
         if (i != -1) return VOWELS_ALL_TILDE.charAt(i);
@@ -56,8 +52,7 @@ public class StringUtils {
         return 0;
     }
 
-    char GetVowelCircumflex(char vowel)
-    {
+    char GetVowelCircumflex(char vowel) {
 
         final int i = VOWELS_ALL_NOTILDE.indexOf(vowel);
 
