@@ -52,7 +52,8 @@ public class AndaluhRules {
     private static final Pattern pattern_eps_end = Pattern.compile("(?i)(e)(ps)");
     private static final Pattern pattern_d_end = Pattern.compile("(?i)([aeiouáéíóú])(d)\\b");
     private static final Pattern pattern_s_end = Pattern.compile("(?i)([aeiouáéíóú])(s)\\b");
-    private static final Pattern pattern_const_end = Pattern.compile("(?i)([aeiouáâçéíóú])([bcfgjklprtxz]\\b)");
+    private static final Pattern pattern_const_end = Pattern.compile("(?i)([aeiouáâçéíóú])([bcfgjkprtxz]\\b)");
+    private static final Pattern pattern_l_end = Pattern.compile("(?i)([aeiouáâçéíóú])(l\\b)");
     private static final Pattern pattern_digraph_special_1 = Pattern.compile("(?i)([aeiouáéíóú])([lr])s(t)");
     private static final Pattern pattern_digraph_special_2 = Pattern.compile("(?i)(tr|p)([ao])(?:ns|st)([bcçdfghjklmnpqstvwxyz])");
     private static final Pattern pattern_digraph_special_3 = Pattern.compile("(?i)([aeiouáéíóú])([bdnr])(s)([bcçdfghjklmnpqstvwxyz])");
@@ -561,6 +562,11 @@ public class AndaluhRules {
         return matcher_const_end.replaceAll(matchResult -> const_end_rules_replacer(matchResult, s_end_rules_applied));
     }
 
+    public static String l_ending_rules (String text)
+    {
+        Matcher matcher_l_end = pattern_l_end.matcher(text);
+        return matcher_l_end.replaceAll(matchResult -> const_end_rules_replacer(matchResult, text));
+    }
 
     public static String digraph_special1_rules_replacer(MatchResult matchResult, String text)
     {
@@ -662,7 +668,6 @@ public class AndaluhRules {
     {
         int match = matchResult.start();
         int matchEnd = matchResult.end();
-        System.out.println(matchResult.group(0));
         return "r" + text.substring(match + 1, matchEnd);
     }
 

@@ -37,6 +37,7 @@ public class Andaluh {
         palabra = AndaluhRules.digraph_rules(palabra);
         palabra = AndaluhRules.exception_rules(palabra);
         palabra = AndaluhRules.word_interaction_rules(palabra);
+        palabra = AndaluhRules.l_ending_rules(palabra);
 
         return palabra;
     }
