@@ -59,7 +59,7 @@ public class AndaluhRules {
     private static final Pattern pattern_digraph_special_4 = Pattern.compile("(?i)([aeiouáéíóú])[djrstxz](l)");
     private static final Pattern pattern_digraph_general = Pattern.compile("(?i)([aeiouáéíóú])(" + String.join("|", DIGRAPHS)+ ")");
     private static final Pattern pattern_exception = Pattern.compile("");
-    private static final Pattern pattern_word_interaction = Pattern.compile("");
+    private static final Pattern pattern_word_interaction = Pattern.compile("(?i)(l\\b)(\\s)([bcçdfghjklmnñpqstvwxyz])");
     private static final Pattern pattern_vocal_tilde = Pattern.compile("(?i)á|é|í|ó|ú");
 
     // EPA character for Voiceless alveolar fricative /s/ https://en.wikipedia.org/wiki/Voiceless_alveolar_fricative
@@ -600,8 +600,6 @@ public class AndaluhRules {
         char s_char = text.charAt(match + 2);
         char digraph_char = text.charAt(matchEnd - 1);
 
-        System.out.println(vowel_char + "/" + cons_char + "/"  + s_char + "/" + digraph_char);
-
         if(Character.toLowerCase(cons_char) == 'r' && Character.toLowerCase(s_char) == 's')
         {
             return Character.toString(vowel_char) + Character.toString(cons_char) + digraph_char + digraph_char;
@@ -634,23 +632,17 @@ public class AndaluhRules {
 
     public static String digraph_rules (String text)
     {
-        System.out.println("Input:" + text);
-
         Matcher matcher_digraph_special1 = pattern_digraph_special_1.matcher(text);
         String digraph_special1_rules_applied = matcher_digraph_special1.replaceAll(matchResult -> digraph_special1_rules_replacer(matchResult, text));
-        System.out.println("1:" + digraph_special1_rules_applied);
 
         Matcher matcher_digraph_special2 = pattern_digraph_special_2.matcher(digraph_special1_rules_applied);
         String digraph_special2_rules_applied = matcher_digraph_special2.replaceAll(matchResult -> digraph_special2_rules_replacer(matchResult, digraph_special1_rules_applied));
-        System.out.println("2:" + digraph_special2_rules_applied);
 
         Matcher matcher_digraph_special3 = pattern_digraph_special_3.matcher(digraph_special2_rules_applied);
         String digraph_special3_rules_applied = matcher_digraph_special3.replaceAll(matchResult -> digraph_special3_rules_replacer(matchResult, digraph_special2_rules_applied));
-        System.out.println("3:" + digraph_special3_rules_applied);
 
         Matcher matcher_digraph_special4 = pattern_digraph_special_4.matcher(digraph_special3_rules_applied);
         String digraph_special4_rules_applied = matcher_digraph_special4.replaceAll(matchResult -> digraph_special4_rules_replacer(matchResult, digraph_special3_rules_applied));
-        System.out.println("4:" + digraph_special4_rules_applied);
 
         Matcher matcher_digraph_general = pattern_digraph_general.matcher(digraph_special4_rules_applied);
         return matcher_digraph_general.replaceAll(matchResult -> digraph_general_rules_replacer(matchResult, digraph_special4_rules_applied));
@@ -668,12 +660,16 @@ public class AndaluhRules {
 
     public static String word_interaction_rules_replacer(MatchResult matchResult, String text)
     {
-        return text;
+        int match = matchResult.start();
+        int matchEnd = matchResult.end();
+        System.out.println(matchResult.group(0));
+        return "r" + text.substring(match + 1, matchEnd);
     }
 
     public static String word_interaction_rules (String text)
     {
-        return text;
+        Matcher matcher_word_interaction = pattern_word_interaction.matcher(text);
+        return matcher_word_interaction.replaceAll(matchResult -> word_interaction_rules_replacer(matchResult, text));
     }
 
 }
