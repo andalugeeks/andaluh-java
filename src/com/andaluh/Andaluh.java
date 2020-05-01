@@ -6,6 +6,8 @@ import static java.nio.charset.StandardCharsets.*;
 
 public class Andaluh {
 
+    public static final Boolean DEBUG = true;
+
     public static String transliterate(String text) {
         return TransliterateString(text);
     }
@@ -21,20 +23,33 @@ public class Andaluh {
 
     public static String TransliterateString(String palabra) {
         palabra = AndaluhRules.h_rules(palabra);
+        if(DEBUG) System.out.println("h_rules: " + palabra);
         palabra = AndaluhRules.x_rules(palabra);
+        if(DEBUG) System.out.println("x_rules: " + palabra);
         palabra = AndaluhRules.ch_rules(palabra);
+        if(DEBUG) System.out.println("ch_rules: " + palabra);
         palabra = AndaluhRules.gj_rules(palabra);
+        if(DEBUG) System.out.println("gj_rules: " + palabra);
         palabra = AndaluhRules.v_rules(palabra);
+        if(DEBUG) System.out.println("v_rules: " + palabra);
         palabra = AndaluhRules.ll_rules(palabra);
+        if(DEBUG) System.out.println("ll_rules: " + palabra);
         palabra = AndaluhRules.l_rules(palabra);
+        if(DEBUG) System.out.println("l_rules: " + palabra);
         palabra = AndaluhRules.psico_pseudo_rules(palabra);
+        if(DEBUG) System.out.println("psico_pseudo_rules: " + palabra);
         palabra = AndaluhRules.vaf_rules(palabra);
+        if(DEBUG) System.out.println("vaf_rules: " + palabra);
         palabra = AndaluhRules.word_ending_rules(palabra);
+        if(DEBUG) System.out.println("word_ending_rules: " + palabra);
         palabra = AndaluhRules.digraph_rules(palabra);
+        if(DEBUG) System.out.println("digraph_rules: " + palabra);
         palabra = AndaluhRules.exception_rules(palabra);
+        if(DEBUG) System.out.println("exception_rules: " + palabra);
         palabra = AndaluhRules.word_interaction_rules(palabra);
+        if(DEBUG) System.out.println("word_interaction_rules: " + palabra);
         palabra = AndaluhRules.l_ending_rules(palabra);
-
+        if(DEBUG) System.out.print("l_ending_rules: ");
         return palabra;
     }
 

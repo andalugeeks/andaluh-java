@@ -59,7 +59,7 @@ public class AndaluhRules {
     private static final Pattern pattern_digraph_special_3 = Pattern.compile("(?i)([aeiouáéíóú])([bdnr])(s)([bcçdfghjklmnpqstvwxyz])");
     private static final Pattern pattern_digraph_special_4 = Pattern.compile("(?i)([aeiouáéíóú])[djrstxz](l)");
     private static final Pattern pattern_digraph_general = Pattern.compile("(?i)([aeiouáéíóú])(" + String.join("|", DIGRAPHS) + ")");
-    private static final Pattern pattern_exception = Pattern.compile("");
+    private static final Pattern pattern_exception = Pattern.compile("\\w+\\b");
     private static final Pattern pattern_word_interaction = Pattern.compile("(?i)(l\\b)(\\s)([bcçdfghjklmnñpqstvwxyz])");
     private static final Pattern pattern_vocal_tilde = Pattern.compile("(?i)á|é|í|ó|ú");
 
@@ -298,6 +298,11 @@ public class AndaluhRules {
         put("sprint", "êpprín");
         put("wa", "gua");
     }};
+
+    public static Boolean check_exception(Map<String, String> diccionario, String text)
+    {
+        return diccionario.containsKey(text.toLowerCase());
+    }
 
     public static String h_hue_rules_replacer(MatchResult matchResult, String text) {
         int match = matchResult.start();
@@ -704,11 +709,24 @@ public class AndaluhRules {
     }
 
     public static String exception_rules_replacer(MatchResult matchResult, String text) {
-        return text;
+        int match = matchResult.start();
+        int matchEnd = matchResult.end();
+
+        String palabra = matchResult.group(0);
+        if(check_exception(ENDING_RULES_EXCEPTION, palabra))
+        {
+            return ENDING_RULES_EXCEPTION.get(palabra);
+        }
+        else
+        {
+            return palabra;
+        }
+
     }
 
     public static String exception_rules(String text) {
-        return text;
+        Matcher matcher_exception = pattern_exception.matcher(text);
+        return matcher_exception.replaceAll(matchResult -> exception_rules_replacer(matchResult, text));
     }
 
     public static String word_interaction_rules_replacer(MatchResult matchResult, String text) {
