@@ -481,9 +481,24 @@ public class AndaluhRules {
         return text.substring(match, match) + ll_correct_capitalization + text.substring(match + 2, match + 2);
     }
 
+    public static String ll_exception_replacer(MatchResult matchResult, String text) {
+        String palabra = matchResult.group(0);
+        if(check_exception(LL_RULES_EXCEPT, palabra))
+        {
+            return LL_RULES_EXCEPT.get(palabra);
+        }
+        else
+        {
+            return palabra;
+        }
+    }
+
     public static String ll_rules(String text) {
-        Matcher matcher_ll = pattern_ll.matcher(text);
-        return matcher_ll.replaceAll(matchResult -> ll_rules_replacer(matchResult, text));
+        Matcher ll_exception = pattern_exception.matcher(text);
+        String ll_exception_applied = ll_exception.replaceAll(matchResult -> ll_exception_replacer(matchResult,text));
+
+        Matcher matcher_ll = pattern_ll.matcher(ll_exception_applied);
+        return matcher_ll.replaceAll(matchResult -> ll_rules_replacer(matchResult, ll_exception_applied));
     }
 
     public static String l_rules_replacer(MatchResult matchResult, String text) {
@@ -748,9 +763,6 @@ public class AndaluhRules {
     }
 
     public static String exception_rules_replacer(MatchResult matchResult, String text) {
-        int match = matchResult.start();
-        int matchEnd = matchResult.end();
-
         String palabra = matchResult.group(0);
         if(check_exception(ENDING_RULES_EXCEPTION, palabra))
         {
