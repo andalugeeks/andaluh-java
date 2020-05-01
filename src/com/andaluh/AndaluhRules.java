@@ -453,9 +453,23 @@ public class AndaluhRules {
         return text.substring(match, match) + v_correct_capitalization + text.substring(match + 2, match + 2);
     }
 
+    public static String v_exception_replacer(MatchResult matchResult, String text) {
+        String palabra = matchResult.group(0);
+        if(check_exception(V_RULES_EXCEPT, palabra))
+        {
+            return V_RULES_EXCEPT.get(palabra);
+        }
+        else
+        {
+            return palabra;
+        }
+    }
     public static String v_rules(String text) {
-        Matcher matcher_nv = pattern_nv.matcher(text);
-        String nv_rules_applied = matcher_nv.replaceAll(matchResult -> nv_rules_replacer(matchResult, text));
+        Matcher matcher_exception = pattern_exception.matcher(text);
+        String v_exception_applied = matcher_exception.replaceAll(matchResult -> v_exception_replacer(matchResult,text));
+
+        Matcher matcher_nv = pattern_nv.matcher(v_exception_applied);
+        String nv_rules_applied = matcher_nv.replaceAll(matchResult -> nv_rules_replacer(matchResult, v_exception_applied));
 
         Matcher matcher_v = pattern_v.matcher(nv_rules_applied);
         return matcher_v.replaceAll(matchResult -> v_rules_replacer(matchResult, nv_rules_applied));
