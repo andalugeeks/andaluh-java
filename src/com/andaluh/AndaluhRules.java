@@ -323,9 +323,24 @@ public class AndaluhRules {
             return text.charAt(match) == 'H' ? undetermined_vocal.toUpperCase() : undetermined_vocal;
         } else return "";
     }
+    public static String h_exceptions_replacer(MatchResult matchResult, String text)
+    {
+        String palabra = matchResult.group(0);
+        if(check_exception(H_RULES_EXCEPT, palabra))
+        {
+            String sustituto = H_RULES_EXCEPT.get(palabra);
+            System.out.println(palabra + " -> " + sustituto);
+            return sustituto;
+        }
+        else return palabra;
+    }
 
     public static String h_rules(String text) {
-        Matcher matcher_hua = pattern_h_hua.matcher(text);
+
+        Matcher matcher_exception = pattern_exception.matcher(text);
+        String exceptions_applied = matcher_exception.replaceAll(matchResult -> h_exceptions_replacer(matchResult, text));
+
+        Matcher matcher_hua = pattern_h_hua.matcher(exceptions_applied);
         String hua_rules_applied = matcher_hua.replaceAll(matchResult -> h_hua_rules_replacer(matchResult, text));
 
         Matcher matcher_hue = pattern_h_hue.matcher(hua_rules_applied);
@@ -487,12 +502,11 @@ public class AndaluhRules {
         return pattern_vocal_tilde.matcher(text).find();
     }
 
-    private static final char[] caracteresNoPalabra = {' ', ',', '.', ';', ':', '-', '_', '?', '¿', '(', '"', '\'', '\n', '\r', '['};
 
     public static int get_indice_principio_palabra(String text) {
         int indice = 0;
         int indiceMax = text.length();
-        for (char c : caracteresNoPalabra) {
+        for (char c : StringUtils.caracteresNoPalabra) {
             int indiceCandidato = text.lastIndexOf(c);
             if (indiceCandidato < 0 || indiceCandidato > indiceMax) continue;
             indice = Integer.max(indiceCandidato, indice);

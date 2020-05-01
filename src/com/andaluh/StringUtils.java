@@ -2,6 +2,9 @@ package com.andaluh;
 
 public class StringUtils {
 
+    public static final char[] caracteresNoPalabra = {' ', ',', '.', ';', ':', '-', '_', '?', '¿', '(', '"', '\'', '\n', '\r', '['};
+
+
     static Boolean IsUpperCase(String str) {
         return str.toUpperCase().equals(str);
     }
@@ -22,6 +25,39 @@ public class StringUtils {
             return word.contentEquals(word_capitalized);
         }
     */
+
+    static String GetWholeWord(String text, int index)
+    {
+        int startIndex, endIndex;
+        startIndex = GetStartIndex(text, index);
+        endIndex   = GetEndIndex  (text, index);
+        return text.substring(startIndex,endIndex);
+    }
+
+    private static int GetEndIndex(String text, int index) {
+        for(int i = index; i < text.length(); i++)
+        {
+            char caracterCandidato = text.charAt(i);
+            for (char c : StringUtils.caracteresNoPalabra)
+            {
+                if(caracterCandidato == c) return i;
+            }
+        }
+        return text.length();
+    }
+
+    private static int GetStartIndex(String text, int index) {
+        for(int i = index; i > 0; i--)
+        {
+            char caracterCandidato = text.charAt(i);
+            for (char c : StringUtils.caracteresNoPalabra)
+            {
+                if(caracterCandidato == c) return i;
+            }
+        }
+        return 0;
+    }
+
     static String Capitalize(String word) {
         return String.valueOf(word.charAt(0)).toUpperCase() + word.substring(1).toLowerCase();
     }
