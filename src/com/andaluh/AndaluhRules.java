@@ -328,9 +328,7 @@ public class AndaluhRules {
         String palabra = matchResult.group(0);
         if(check_exception(H_RULES_EXCEPT, palabra))
         {
-            String sustituto = H_RULES_EXCEPT.get(palabra);
-            System.out.println(palabra + " -> " + sustituto);
-            return sustituto;
+            return H_RULES_EXCEPT.get(palabra);
         }
         else return palabra;
     }
@@ -413,9 +411,22 @@ public class AndaluhRules {
         String g_correct_capitalization = StringUtils.IsCapitalized(text.substring(match, match + 1)) ? "G" : "g";
         return g_correct_capitalization + text.substring(match + 1, matchEnd);
     }
-
+    public static String exception_gj_rules_replacer(MatchResult matchResult, String text) {
+        String palabra = matchResult.group(0);
+        if(check_exception(GJ_RULES_EXCEPT, palabra))
+        {
+            return GJ_RULES_EXCEPT.get(palabra);
+        }
+        else
+        {
+            return palabra;
+        }
+    }
     public static String gj_rules(String text) {
-        Matcher matcher_gj = pattern_gj.matcher(text);
+        Matcher matcher_exception_gj = pattern_exception.matcher(text);
+        String exception_gj_applied = matcher_exception_gj.replaceAll(matchResult -> exception_gj_rules_replacer(matchResult, text));
+
+        Matcher matcher_gj = pattern_gj.matcher(exception_gj_applied);
         String gj_rules_applied = matcher_gj.replaceAll(matchResult -> gj_rules_replacer(matchResult, text));
 
         Matcher matcher_gue_gui = pattern_gue_gui.matcher(gj_rules_applied);
