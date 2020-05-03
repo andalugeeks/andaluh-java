@@ -572,6 +572,13 @@ public class AndaluhRules {
 
         if (contain_vocal_tilde(prefix)) return suffix;
 
+        String palabra = StringUtils.GetWholeWord(text, match);
+        System.out.println(palabra);
+        if(check_exception(WORDEND_D_INTERVOWEL_RULES_EXCEPT, palabra))
+        {
+            return suffix;
+        }
+
         switch (suffix.toLowerCase()) {
             case "ada":
                 return "á";

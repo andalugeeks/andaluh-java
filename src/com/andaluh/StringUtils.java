@@ -31,7 +31,7 @@ public class StringUtils {
         int startIndex, endIndex;
         startIndex = GetStartIndex(text, index);
         endIndex   = GetEndIndex  (text, index);
-        return text.substring(startIndex,endIndex);
+        return text.substring(startIndex + 1,endIndex);
     }
 
     private static int GetEndIndex(String text, int index) {
