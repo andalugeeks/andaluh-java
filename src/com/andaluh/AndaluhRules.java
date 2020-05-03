@@ -684,6 +684,20 @@ public class AndaluhRules {
         }
     }
 
+    public static String s_end_exceptions_replacer(MatchResult matchResult, String text) {
+        String palabra = matchResult.group(0);
+        if(check_exception(WORDEND_S_RULES_EXCEPT, palabra))
+        {
+            return WORDEND_S_RULES_EXCEPT.get(palabra);
+        }
+        else
+        {
+
+            return palabra;
+        }
+    }
+
+
         public static String word_ending_rules(String text) {
         Matcher matcher_intervowel_d_end = pattern_intervowel_d_end.matcher(text);
         String intervowel_d_end_rules_applied = matcher_intervowel_d_end.replaceAll(matchResult -> intervowel_d_end_rules_replacer(matchResult, text));
@@ -697,8 +711,11 @@ public class AndaluhRules {
         Matcher matcher_d_end = pattern_d_end.matcher(d_end_exceptions_applied);
         String d_end_rules_applied = matcher_d_end.replaceAll(matchResult -> d_end_rules_replacer(matchResult, d_end_exceptions_applied));
 
-        Matcher matcher_s_end = pattern_s_end.matcher(d_end_rules_applied);
-        String s_end_rules_applied = matcher_s_end.replaceAll(matchResult -> s_end_rules_replacer(matchResult, d_end_rules_applied));
+        Matcher matcher_s_end_exceptions = pattern_exception.matcher(d_end_rules_applied);
+        String s_end_exceptions_applied = matcher_s_end_exceptions.replaceAll(matchResult -> s_end_exceptions_replacer(matchResult, d_end_rules_applied));
+
+        Matcher matcher_s_end = pattern_s_end.matcher(s_end_exceptions_applied);
+        String s_end_rules_applied = matcher_s_end.replaceAll(matchResult -> s_end_rules_replacer(matchResult, s_end_exceptions_applied));
 
         Matcher matcher_const_end = pattern_const_end.matcher(s_end_rules_applied);
         return matcher_const_end.replaceAll(matchResult -> const_end_rules_replacer(matchResult, s_end_rules_applied));
