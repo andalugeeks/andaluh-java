@@ -59,7 +59,7 @@ public class AndaluhRules {
     private static final Pattern pattern_digraph_special_3 = Pattern.compile("(?i)([aeiouáéíóú])([bdnr])(s)([bcçdfghjklmnpqstvwxyz])");
     private static final Pattern pattern_digraph_special_4 = Pattern.compile("(?i)([aeiouáéíóú])[djrstxz](l)");
     private static final Pattern pattern_digraph_general = Pattern.compile("(?i)([aeiouáéíóú])(" + String.join("|", DIGRAPHS) + ")");
-    private static final Pattern pattern_exception = Pattern.compile("\\w+\\b");
+    private static final Pattern pattern_exception = Pattern.compile("(?i)ç?\\w+\\b");
     private static final Pattern pattern_word_interaction = Pattern.compile("(?i)(l\\b)(\\s)([bcçdfghjklmnñpqstvwxyz])");
     private static final Pattern pattern_vocal_tilde = Pattern.compile("(?i)á|é|í|ó|ú");
 
@@ -573,7 +573,7 @@ public class AndaluhRules {
         if (contain_vocal_tilde(prefix)) return suffix;
 
         String palabra = StringUtils.GetWholeWord(text, match);
-        System.out.println(palabra);
+
         if(check_exception(WORDEND_D_INTERVOWEL_RULES_EXCEPT, palabra))
         {
             return suffix;
@@ -671,15 +671,31 @@ public class AndaluhRules {
         return apply_repl_rules(Character.toString(suffix.charAt(0))) + "h";
     }
 
-    public static String word_ending_rules(String text) {
+    public static String d_end_exceptions_replacer(MatchResult matchResult, String text) {
+        String palabra = matchResult.group(0);
+        if(check_exception(WORDEND_D_RULES_EXCEPT, palabra))
+        {
+            return WORDEND_D_RULES_EXCEPT.get(palabra);
+        }
+        else
+        {
+
+            return palabra;
+        }
+    }
+
+        public static String word_ending_rules(String text) {
         Matcher matcher_intervowel_d_end = pattern_intervowel_d_end.matcher(text);
         String intervowel_d_end_rules_applied = matcher_intervowel_d_end.replaceAll(matchResult -> intervowel_d_end_rules_replacer(matchResult, text));
 
         Matcher matcher_eps_end = pattern_eps_end.matcher(intervowel_d_end_rules_applied);
         String eps_end_rules_applied = matcher_eps_end.replaceAll(matchResult -> eps_end_rules_replacer(matchResult, intervowel_d_end_rules_applied));
 
-        Matcher matcher_d_end = pattern_d_end.matcher(eps_end_rules_applied);
-        String d_end_rules_applied = matcher_d_end.replaceAll(matchResult -> d_end_rules_replacer(matchResult, eps_end_rules_applied));
+        Matcher matcher_d_end_exceptions = pattern_exception.matcher(eps_end_rules_applied);
+        String d_end_exceptions_applied = matcher_d_end_exceptions.replaceAll(matchResult -> d_end_exceptions_replacer(matchResult, eps_end_rules_applied));
+
+        Matcher matcher_d_end = pattern_d_end.matcher(d_end_exceptions_applied);
+        String d_end_rules_applied = matcher_d_end.replaceAll(matchResult -> d_end_rules_replacer(matchResult, d_end_exceptions_applied));
 
         Matcher matcher_s_end = pattern_s_end.matcher(d_end_rules_applied);
         String s_end_rules_applied = matcher_s_end.replaceAll(matchResult -> s_end_rules_replacer(matchResult, d_end_rules_applied));
