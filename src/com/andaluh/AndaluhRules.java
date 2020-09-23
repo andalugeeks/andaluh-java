@@ -194,10 +194,8 @@ public class AndaluhRules {
         put("él", "èl");
         put("tal", "tal");
         put("bil", "bîl");
-// TODO, uir = huir. Maybe better to add the exceptions on h_rules?
         put("por", "por");
         put("uir", "huîh");
-// sic, tac
         put("çic", "çic");
         put("tac", "tac");
         put("yak", "yak");
@@ -306,21 +304,26 @@ public class AndaluhRules {
 
     public static String h_hue_rules_replacer(MatchResult matchResult, String text) {
         int match = matchResult.start();
-        String gu_correct_capitalization = StringUtils.IsCapitalized(text.substring(match, match + 1)) ? "Gü" : "gü";
+        String matchText = text.substring(match, match + 1);
+        String gu_correct_capitalization = StringUtils.IsCapitalized(matchText) ? "Gü" : "gü";
+        gu_correct_capitalization = StringUtils.IsLowerCase(matchText) ? "gü" : gu_correct_capitalization;
         return gu_correct_capitalization + text.substring(match + 2, match + 3);
     }
 
     public static String h_hua_rules_replacer(MatchResult matchResult, String text) {
         int match = matchResult.start();
-        String g_correct_capitalization = StringUtils.IsCapitalized(text.substring(match, match + 1)) ? "G" : "g";
+        String matchText = text.substring(match, match + 1);
+        String g_correct_capitalization = (StringUtils.IsCapitalized(matchText) || StringUtils.IsUpperCase(matchText)) ? "G" : "g";
         return g_correct_capitalization + text.substring(match + 1, match + 3);
     }
 
     public static String h_rules_replacer(MatchResult matchResult, String text) {
         int match = matchResult.start();
         String undetermined_vocal = text.substring(match + 1, match + 2);
-        if (text.charAt(match) == 'H' || text.charAt(match) == 'h') {
-            return text.charAt(match) == 'H' ? undetermined_vocal.toUpperCase() : undetermined_vocal;
+        String charString = Character.toString(text.charAt(match));
+        boolean isLowerCase = StringUtils.IsLowerCase(charString);
+        if (charString.toLowerCase().toCharArray()[0] == 'h') {
+            return isLowerCase ? undetermined_vocal : undetermined_vocal.toUpperCase();
         } else return "";
     }
     public static String h_exceptions_replacer(MatchResult matchResult, String text)
@@ -380,7 +383,7 @@ public class AndaluhRules {
 
     public static String gj_rules_replacer(MatchResult matchResult, String text) {
         int match = matchResult.start();
-        String x_correct_capitalization = StringUtils.IsCapitalized(text.substring(match, match + 1)) ? VVF_mayus : VVF;
+        String x_correct_capitalization = StringUtils.IsLowerCase(text.substring(match, match + 1)) ? VVF : VVF_mayus;
         return x_correct_capitalization + text.substring(match + 1, match + 2);
     }
 
@@ -393,29 +396,32 @@ public class AndaluhRules {
     public static String guue_guui_rules_replacer(MatchResult matchResult, String text) {
         int match = matchResult.start();
         int matchEnd = matchResult.end();
-        String u_correct_capitalization = StringUtils.IsCapitalized(text.substring(match + 1, match + 2)) ? "U" : "u";
+        String u_correct_capitalization = StringUtils.IsLowerCase(text.substring(match + 1, match + 2)) ? "u" : "U";
 
         return text.substring(match, match + 1) + u_correct_capitalization + text.substring(match + 2, matchEnd);
     }
 
-    public static String guen_rules_replacer(MatchResult matchResult, String text) {
+    public static String guen_guel_gues_rules_replacer(MatchResult matchResult, String text) {
         int match = matchResult.start();
         int matchEnd = matchResult.end();
-        String g_correct_capitalization = StringUtils.IsCapitalized(text.substring(match, match + 1)) ? "G" : "g";
+        String g_correct_capitalization = StringUtils.IsLowerCase(text.substring(match, match + 1)) ? "g" : "G";
         return g_correct_capitalization + text.substring(match + 1, matchEnd);
     }
 
-    public static String guel_gues_rules_replacer(MatchResult matchResult, String text) {
-        int match = matchResult.start();
-        int matchEnd = matchResult.end();
-        String g_correct_capitalization = StringUtils.IsCapitalized(text.substring(match, match + 1)) ? "G" : "g";
-        return g_correct_capitalization + text.substring(match + 1, matchEnd);
+    public static String guen_rules_replacer(MatchResult matchResult, String text) {
+        return guen_guel_gues_rules_replacer(matchResult, text);
     }
+
+    public static String guel_gues_rules_replacer(MatchResult matchResult, String text) {
+        return guen_guel_gues_rules_replacer(matchResult, text);
+    }
+
     public static String exception_gj_rules_replacer(MatchResult matchResult, String text) {
         String palabra = matchResult.group(0);
+        boolean isLowerCase = StringUtils.IsLowerCase(palabra);
         if(check_exception(GJ_RULES_EXCEPT, palabra))
         {
-            return GJ_RULES_EXCEPT.get(palabra);
+            return isLowerCase ? GJ_RULES_EXCEPT.get(palabra) : GJ_RULES_EXCEPT.get(palabra).toUpperCase();
         }
         else
         {
@@ -449,15 +455,16 @@ public class AndaluhRules {
 
     public static String v_rules_replacer(MatchResult matchResult, String text) {
         int match = matchResult.start();
-        String v_correct_capitalization = StringUtils.IsCapitalized(text.substring(match, match + 1)) ? "B" : "b";
+        String v_correct_capitalization = StringUtils.IsLowerCase(text.substring(match, match + 1)) ? "b" : "B";
         return text.substring(match, match) + v_correct_capitalization + text.substring(match + 2, match + 2);
     }
 
     public static String v_exception_replacer(MatchResult matchResult, String text) {
         String palabra = matchResult.group(0);
+        boolean isLowerCase = StringUtils.IsLowerCase(palabra);
         if(check_exception(V_RULES_EXCEPT, palabra))
         {
-            return V_RULES_EXCEPT.get(palabra);
+            return isLowerCase ? V_RULES_EXCEPT.get(palabra) : V_RULES_EXCEPT.get(palabra).toUpperCase();
         }
         else
         {
@@ -483,9 +490,11 @@ public class AndaluhRules {
 
     public static String ll_exception_replacer(MatchResult matchResult, String text) {
         String palabra = matchResult.group(0);
+        boolean isLowerCase = StringUtils.IsLowerCase(palabra);
+
         if(check_exception(LL_RULES_EXCEPT, palabra))
         {
-            return LL_RULES_EXCEPT.get(palabra);
+            return isLowerCase ? LL_RULES_EXCEPT.get(palabra) : LL_RULES_EXCEPT.get(palabra).toUpperCase();
         }
         else
         {
@@ -574,26 +583,28 @@ public class AndaluhRules {
 
         String palabra = StringUtils.GetWholeWord(text, match);
 
-        if(check_exception(WORDEND_D_INTERVOWEL_RULES_EXCEPT, palabra))
+        if(check_exception(WORDEND_D_INTERVOWEL_RULES_EXCEPT, palabra)) // is NOT general bc subtitutes only suffix
         {
             return suffix;
         }
 
-        switch (suffix.toLowerCase()) {
+        String suffixLowerCased = suffix.toLowerCase();
+        boolean isLowerCase = StringUtils.IsLowerCase(suffix);
+        switch (suffixLowerCased) {
             case "ada":
-                return "á";
+                return isLowerCase ? "á" : "Á";
             case "adas":
-                return "âh";
+                return isLowerCase ? "âh" : "ÂH";
             case "ado":
-                return "ao";
+                return isLowerCase ? "ao" : "AO";
             case "ados":
-                return "áôh";
+                return isLowerCase ? "áôh" : "ÁÔH";
             case "idos":
             case "ídos":
-                return "íôh";
+                return isLowerCase ? "íôh" : "ÍÔH";
             case "ido":
             case "ído":
-                return "ío";
+                return isLowerCase ? "ío" : "ÍO";
             default:
                 return suffix;
         }
@@ -606,9 +617,10 @@ public class AndaluhRules {
         String prefix = get_prefix(matchResult, text);
 
         String suffix = text.substring(match, matchEnd);
+        boolean isLowerCase = StringUtils.IsLowerCase(suffix);
 
         if (!contain_vocal_tilde(prefix)) return suffix;
-        return "ê";
+        return isLowerCase ? "ê" : "Ê";
     }
 
     public static String d_end_rules_replacer(MatchResult matchResult, String text) {
@@ -618,6 +630,7 @@ public class AndaluhRules {
         String prefix = get_prefix(matchResult, text);
 
         String suffix = text.substring(match, matchEnd);
+        boolean isLowerCase = StringUtils.IsLowerCase(suffix);
 
         char vocalCandidata = suffix.charAt(0);
         if (contain_vocal_tilde(prefix)) {
@@ -631,7 +644,8 @@ public class AndaluhRules {
             }
         }
 
-        return apply_stressed_rules(Character.toString(vocalCandidata)) + "h";
+        String addedH = isLowerCase ? "h" : "H";
+        return apply_stressed_rules(Character.toString(vocalCandidata)) + addedH;
     }
 
     private static String apply_repl_rules(String vocal) {
@@ -646,15 +660,15 @@ public class AndaluhRules {
         int match = matchResult.start();
         int matchEnd = matchResult.end();
 
-        String prefix = get_prefix(matchResult, text);
-
         String suffix = text.substring(match, matchEnd);
+        boolean isLowerCase = StringUtils.IsLowerCase(suffix);
 
         if (!contain_vocal_tilde(Character.toString(suffix.charAt(0)))) {
             return apply_repl_rules(Character.toString(suffix.charAt(0)));
         }
+        String addedH = isLowerCase ? "h" : "H";
 
-        return apply_repl_rules(Character.toString(suffix.charAt(0))) + "h";
+        return apply_repl_rules(Character.toString(suffix.charAt(0))) + addedH;
     }
 
     public static String const_end_rules_replacer(MatchResult matchResult, String text) {
@@ -664,41 +678,45 @@ public class AndaluhRules {
         String prefix = get_prefix(matchResult, text);
 
         String suffix = text.substring(match, matchEnd);
+        boolean isLowerCase = StringUtils.IsLowerCase(suffix);
+
         if (contain_vocal_tilde(prefix)) {
             return apply_repl_rules(Character.toString(suffix.charAt(0)));
         }
-
-        return apply_repl_rules(Character.toString(suffix.charAt(0))) + "h";
+        String addedH = isLowerCase ? "h" : "H";
+        return apply_repl_rules(Character.toString(suffix.charAt(0))) + addedH;
     }
 
     public static String d_end_exceptions_replacer(MatchResult matchResult, String text) {
         String palabra = matchResult.group(0);
+        boolean isLowerCase = StringUtils.IsLowerCase(palabra);
+
         if(check_exception(WORDEND_D_RULES_EXCEPT, palabra))
         {
-            return WORDEND_D_RULES_EXCEPT.get(palabra);
+            return isLowerCase ? WORDEND_D_RULES_EXCEPT.get(palabra) : WORDEND_D_RULES_EXCEPT.get(palabra).toUpperCase();
         }
         else
         {
-
             return palabra;
         }
     }
 
     public static String s_end_exceptions_replacer(MatchResult matchResult, String text) {
         String palabra = matchResult.group(0);
+        boolean isLowerCase = StringUtils.IsLowerCase(palabra);
+
         if(check_exception(WORDEND_S_RULES_EXCEPT, palabra))
         {
-            return WORDEND_S_RULES_EXCEPT.get(palabra);
+            return isLowerCase ? WORDEND_S_RULES_EXCEPT.get(palabra) : WORDEND_S_RULES_EXCEPT.get(palabra).toUpperCase();
         }
         else
         {
-
             return palabra;
         }
     }
 
 
-        public static String word_ending_rules(String text) {
+    public static String word_ending_rules(String text) {
         Matcher matcher_intervowel_d_end = pattern_intervowel_d_end.matcher(text);
         String intervowel_d_end_rules_applied = matcher_intervowel_d_end.replaceAll(matchResult -> intervowel_d_end_rules_replacer(matchResult, text));
 
@@ -731,11 +749,17 @@ public class AndaluhRules {
         int matchEnd = matchResult.end();
 
         char l_or_r = text.charAt(match + 1);
+        boolean isLowerCase = StringUtils.IsLowerCase(Character.toString(l_or_r));
+
         switch (l_or_r) {
             case 'l':
-                return text.substring(match, match + 1) + "rtt";
+            case 'L':
+                String rttString = isLowerCase ? "rtt" : "RTT";
+                return text.substring(match, match + 1) + rttString;
             case 'r':
-                return text.substring(match, match + 2) + "tt";
+            case 'R':
+                String ttString = isLowerCase ? "tt" : "TT";
+                return text.substring(match, match + 2) + ttString;
             default:
                 return text.substring(match, matchEnd);
         }
@@ -761,7 +785,7 @@ public class AndaluhRules {
         char digraph_char = text.charAt(matchEnd - 1);
 
         if (Character.toLowerCase(cons_char) == 'r' && Character.toLowerCase(s_char) == 's') {
-            return Character.toString(vowel_char) + Character.toString(cons_char) + digraph_char + digraph_char;
+            return Character.toString(vowel_char) + cons_char + digraph_char + digraph_char;
         } else {
             return apply_repl_rules(Character.toString(vowel_char)) + digraph_char + digraph_char;
         }
@@ -804,15 +828,15 @@ public class AndaluhRules {
 
     public static String exception_rules_replacer(MatchResult matchResult, String text) {
         String palabra = matchResult.group(0);
+        boolean isLowerCase = StringUtils.IsLowerCase(palabra);
         if(check_exception(ENDING_RULES_EXCEPTION, palabra))
         {
-            return ENDING_RULES_EXCEPTION.get(palabra);
+            return isLowerCase ? ENDING_RULES_EXCEPTION.get(palabra) : ENDING_RULES_EXCEPTION.get(palabra).toUpperCase();
         }
         else
         {
             return palabra;
         }
-
     }
 
     public static String exception_rules(String text) {
@@ -823,7 +847,9 @@ public class AndaluhRules {
     public static String word_interaction_rules_replacer(MatchResult matchResult, String text) {
         int match = matchResult.start();
         int matchEnd = matchResult.end();
-        return "r" + text.substring(match + 1, matchEnd);
+        boolean isLowerCase = StringUtils.IsLowerCase(Character.toString(text.charAt(match)));
+        String rString = isLowerCase ? "r" : "R";
+        return rString + text.substring(match + 1, matchEnd);
     }
 
     public static String word_interaction_rules(String text) {
