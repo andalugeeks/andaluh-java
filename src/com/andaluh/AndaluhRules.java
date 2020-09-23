@@ -1,15 +1,9 @@
 package com.andaluh;
 
-import javafx.util.Pair;
-
 import java.util.*;
-
 import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-
-import com.andaluh.StringUtils;
 
 public class AndaluhRules {
 
@@ -302,6 +296,19 @@ public class AndaluhRules {
         return diccionario.containsKey(text.toLowerCase());
     }
 
+    public static String general_exception_replacer(Map<String, String> diccionario, MatchResult matchResult, String text) {
+        String palabra = matchResult.group(0);
+
+        if(check_exception(diccionario, palabra))
+        {
+            if(StringUtils.IsLowerCase  (palabra)) return diccionario.get(palabra);
+            if(StringUtils.IsUpperCase  (palabra)) return diccionario.get(palabra).toUpperCase();
+            if(StringUtils.IsCapitalized(palabra)) return StringUtils.Capitalize(diccionario.get(palabra));
+        }
+
+        return palabra;
+    }
+
     public static String h_hue_rules_replacer(MatchResult matchResult, String text) {
         int match = matchResult.start();
         String matchText = text.substring(match, match + 1);
@@ -326,14 +333,8 @@ public class AndaluhRules {
             return isLowerCase ? undetermined_vocal : undetermined_vocal.toUpperCase();
         } else return "";
     }
-    public static String h_exceptions_replacer(MatchResult matchResult, String text)
-    {
-        String palabra = matchResult.group(0);
-        if(check_exception(H_RULES_EXCEPT, palabra))
-        {
-            return H_RULES_EXCEPT.get(palabra);
-        }
-        else return palabra;
+    public static String h_exceptions_replacer(MatchResult matchResult, String text) {
+        return general_exception_replacer(H_RULES_EXCEPT, matchResult, text);
     }
 
     public static String h_rules(String text) {
@@ -417,16 +418,7 @@ public class AndaluhRules {
     }
 
     public static String exception_gj_rules_replacer(MatchResult matchResult, String text) {
-        String palabra = matchResult.group(0);
-        boolean isLowerCase = StringUtils.IsLowerCase(palabra);
-        if(check_exception(GJ_RULES_EXCEPT, palabra))
-        {
-            return isLowerCase ? GJ_RULES_EXCEPT.get(palabra) : GJ_RULES_EXCEPT.get(palabra).toUpperCase();
-        }
-        else
-        {
-            return palabra;
-        }
+        return general_exception_replacer(GJ_RULES_EXCEPT, matchResult, text);
     }
     public static String gj_rules(String text) {
         Matcher matcher_exception_gj = pattern_exception.matcher(text);
@@ -460,16 +452,7 @@ public class AndaluhRules {
     }
 
     public static String v_exception_replacer(MatchResult matchResult, String text) {
-        String palabra = matchResult.group(0);
-        boolean isLowerCase = StringUtils.IsLowerCase(palabra);
-        if(check_exception(V_RULES_EXCEPT, palabra))
-        {
-            return isLowerCase ? V_RULES_EXCEPT.get(palabra) : V_RULES_EXCEPT.get(palabra).toUpperCase();
-        }
-        else
-        {
-            return palabra;
-        }
+        return general_exception_replacer(V_RULES_EXCEPT, matchResult, text);
     }
     public static String v_rules(String text) {
         Matcher matcher_exception = pattern_exception.matcher(text);
@@ -489,17 +472,7 @@ public class AndaluhRules {
     }
 
     public static String ll_exception_replacer(MatchResult matchResult, String text) {
-        String palabra = matchResult.group(0);
-        boolean isLowerCase = StringUtils.IsLowerCase(palabra);
-
-        if(check_exception(LL_RULES_EXCEPT, palabra))
-        {
-            return isLowerCase ? LL_RULES_EXCEPT.get(palabra) : LL_RULES_EXCEPT.get(palabra).toUpperCase();
-        }
-        else
-        {
-            return palabra;
-        }
+        return general_exception_replacer(LL_RULES_EXCEPT, matchResult, text);
     }
 
     public static String ll_rules(String text) {
@@ -688,31 +661,11 @@ public class AndaluhRules {
     }
 
     public static String d_end_exceptions_replacer(MatchResult matchResult, String text) {
-        String palabra = matchResult.group(0);
-        boolean isLowerCase = StringUtils.IsLowerCase(palabra);
-
-        if(check_exception(WORDEND_D_RULES_EXCEPT, palabra))
-        {
-            return isLowerCase ? WORDEND_D_RULES_EXCEPT.get(palabra) : WORDEND_D_RULES_EXCEPT.get(palabra).toUpperCase();
-        }
-        else
-        {
-            return palabra;
-        }
+        return general_exception_replacer(WORDEND_D_RULES_EXCEPT, matchResult, text);
     }
 
     public static String s_end_exceptions_replacer(MatchResult matchResult, String text) {
-        String palabra = matchResult.group(0);
-        boolean isLowerCase = StringUtils.IsLowerCase(palabra);
-
-        if(check_exception(WORDEND_S_RULES_EXCEPT, palabra))
-        {
-            return isLowerCase ? WORDEND_S_RULES_EXCEPT.get(palabra) : WORDEND_S_RULES_EXCEPT.get(palabra).toUpperCase();
-        }
-        else
-        {
-            return palabra;
-        }
+        return general_exception_replacer(WORDEND_S_RULES_EXCEPT, matchResult, text);
     }
 
 
@@ -827,16 +780,7 @@ public class AndaluhRules {
     }
 
     public static String exception_rules_replacer(MatchResult matchResult, String text) {
-        String palabra = matchResult.group(0);
-        boolean isLowerCase = StringUtils.IsLowerCase(palabra);
-        if(check_exception(ENDING_RULES_EXCEPTION, palabra))
-        {
-            return isLowerCase ? ENDING_RULES_EXCEPTION.get(palabra) : ENDING_RULES_EXCEPTION.get(palabra).toUpperCase();
-        }
-        else
-        {
-            return palabra;
-        }
+        return general_exception_replacer(ENDING_RULES_EXCEPTION, matchResult, text);
     }
 
     public static String exception_rules(String text) {
