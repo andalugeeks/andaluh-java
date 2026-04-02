@@ -1,0 +1,47 @@
+name: Parity With andaluh-py
+
+on:
+  repository_dispatch:
+    types: [andaluh_py_release]
+  workflow_dispatch:
+  schedule:
+    - cron: "15 1 * * *"
+
+jobs:
+  parity:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout andaluh-java
+        uses: actions/checkout@v4
+
+      - name: Checkout andaluh-py
+        uses: actions/checkout@v4
+        with:
+          repository: andalugeeks/andaluh-py
+          path: andaluh-py
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Generate Python golden CSV
+        run: |
+          python3 scripts/gen_python_expected.py \
+            --andaluh-py andaluh-py \
+            --input andaluh-py/tests/lemario_cas_and.csv \
+            --output out/lemario_py.csv
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "17"
+
+      - name: Compile
+        run: |
+          javac -cp "lib/argparse4j-0.8.1.jar" -d out $(find src -name '*.java')
+
+      - name: Run parity tests
+        run: |
+          java -cp out com.andaluh.AndaluhTestRunner out/lemario_py.csv --min-rate=1.0
