@@ -64,7 +64,7 @@ public class StringUtils {
 
     // TODO: This can be improved to perform replacement in a per character basis
 // NOTE: It assumes replacement_word to be already lowercase
-    String KeepCase(String word, String replacement_word) {
+    static String KeepCase(String word, String replacement_word) {
         if (IsLowerCase(word)) return replacement_word;
         if (IsUpperCase(word)) return replacement_word.toUpperCase();
         if (IsCapitalized(word)) return Capitalize(replacement_word);
@@ -75,7 +75,7 @@ public class StringUtils {
     public static final String VOWELS_ALL_NOTILDE = "aeiouâêîôûAEIOUÂÊÎÔÛ";
     public static final String VOWELS_ALL_TILDE = "áéíóúâêîôûÁÉÍÓÚÂÊÎÔÛ";
 
-    char GetVowelTilde(char vowel) {
+    static char GetVowelTilde(char vowel) {
         final int i = VOWELS_ALL_NOTILDE.indexOf(vowel);
         // If no tilde, replace with circumflex
         if (i != -1) return VOWELS_ALL_TILDE.charAt(i);
@@ -88,7 +88,7 @@ public class StringUtils {
         return 0;
     }
 
-    char GetVowelCircumflex(char vowel) {
+    static char GetVowelCircumflex(char vowel) {
 
         final int i = VOWELS_ALL_NOTILDE.indexOf(vowel);
 
