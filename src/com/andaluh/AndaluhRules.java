@@ -237,6 +237,9 @@ public class AndaluhRules {
     }};
 
     public static final Map<String, String> ENDING_RULES_EXCEPTION = new HashMap<String, String>() {{
+        // Brand names
+        put("andaluheeks", "andalugeeks");
+        put("andalujeeks", "andalugeeks");
         // Exceptions to digraph rules with nm
         put("biêmmandao", "bienmandao");
         put("biêmmeçabe", "bienmeçabe");
