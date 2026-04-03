@@ -28,7 +28,7 @@ public class AndaluhRules {
     private static final Pattern pattern_h_general = Pattern.compile("(?iuU)(?<!c)(h)(\\w?)");
     private static final Pattern pattern_h_hua = Pattern.compile("(?iuU)(?<!c)(h)(ua)");
     private static final Pattern pattern_h_hue = Pattern.compile("(?iuU)(?<!c)(h)(u)(e)");
-    private static final Pattern pattern_x_starting = Pattern.compile("(?iuU)\\b(x)");
+    private static final Pattern pattern_x_starting = Pattern.compile("(?iuU)\\b(x)(?!d+\\b)");
     private static final Pattern pattern_x = Pattern.compile("(?iuU)([aeiouáéíóú])(x)([aeiouyáéíóú])");
     private static final Pattern pattern_ch = Pattern.compile("(?iuU)ch");
     private static final Pattern pattern_gj = Pattern.compile("(?iuU)(g(?=[eiéí])|j)([aeiouáéíóú])");
@@ -379,12 +379,6 @@ public class AndaluhRules {
 
     public static String x_rules(String text, String vaf) {
         if (text == null || text.isEmpty()) return text;
-
-        if (text.startsWith("X")) {
-            text = vaf.toUpperCase(Locale.ROOT) + text.substring(1);
-        } else if (text.startsWith("x")) {
-            text = vaf + text.substring(1);
-        }
 
         Matcher matcher_x = pattern_x.matcher(text);
         String x_rules_applied = matcher_x.replaceAll(matchResult -> x_rules_replacer(matchResult, vaf));
