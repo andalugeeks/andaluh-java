@@ -25,37 +25,37 @@ public class AndaluhRules {
             "xb", "xc", "xç", "xÇ", "xd", "xf", "xg", "xh", "xl", "xm", "xn", "xp", "xq", "xr", "xt", "xx", "xy",
             "zb", "zc", "zç", "zÇ", "zd", "zf", "zg", "zh", "zl", "zm", "zn", "zp", "zq", "zr", "zt", "zx", "zy"
     };
-    private static final Pattern pattern_h_general = Pattern.compile("(?i)(?<!c)(h)([aáeéiíoóuú])");
-    private static final Pattern pattern_h_hua = Pattern.compile("(?i)(?<!c)(h)(ua)");
-    private static final Pattern pattern_h_hue = Pattern.compile("(?i)(?<!c)(h)(u)(e)");
-    private static final Pattern pattern_x_starting = Pattern.compile("([xX])([aáeéiíoóuú])");
-    private static final Pattern pattern_x = Pattern.compile("([aeiouáéíóú])(x)([aeiouáéíóú])");
-    private static final Pattern pattern_ch = Pattern.compile("(?i)ch");
-    private static final Pattern pattern_gj = Pattern.compile("(?i)(g(?=[eiéí])|j)([aeiouáéíóú])");
-    private static final Pattern pattern_gue_gui = Pattern.compile("(?i)(g)u([eiéí])");
-    private static final Pattern pattern_guue_guui = Pattern.compile("(?i)(g)(ü)([eiéí])");
-    private static final Pattern pattern_guen = Pattern.compile("(?i)(b)(uen)");
-    private static final Pattern pattern_guel_gues = Pattern.compile("(?i)([sa])?(?<!m)(b)(ue)([ls])");
-    private static final Pattern pattern_v = Pattern.compile("(?i)v");
-    private static final Pattern pattern_nv = Pattern.compile("(?i)nv");
-    private static final Pattern pattern_ll = Pattern.compile("(?i)ll");
-    private static final Pattern pattern_l = Pattern.compile("(?i)(l)([bcçgsdfghkmpqrtxz])");
-    private static final Pattern pattern_psico_pseudo = Pattern.compile("(?i)p(sic|seud)");
-    private static final Pattern pattern_vaf = Pattern.compile("(?i)(c(?=[eiéíêî])|z|s)([aeiouáéíóúÁÉÍÓÚâêîôûÂÊÎÔÛ])");
-    private static final Pattern pattern_intervowel_d_end = Pattern.compile("(?i)([aiíÍ])(d)([oa])(s?)\\b");
-    private static final Pattern pattern_eps_end = Pattern.compile("(?i)(e)(ps)");
-    private static final Pattern pattern_d_end = Pattern.compile("(?i)([aeiouáéíóú])(d)\\b");
-    private static final Pattern pattern_s_end = Pattern.compile("(?i)([aeiouáéíóú])(s)\\b");
-    private static final Pattern pattern_const_end = Pattern.compile("(?i)([aeiouáâçéíóú])([bcfgjkprtxz]\\b)");
-    private static final Pattern pattern_l_end = Pattern.compile("(?i)([aeiouáâçéíóú])(l\\b)");
-    private static final Pattern pattern_digraph_special_1 = Pattern.compile("(?i)([aeiouáéíóú])([lr])s(t)");
-    private static final Pattern pattern_digraph_special_2 = Pattern.compile("(?i)(tr|p)([ao])(?:ns|st)([bcçdfghjklmnpqstvwxyz])");
-    private static final Pattern pattern_digraph_special_3 = Pattern.compile("(?i)([aeiouáéíóú])([bdnr])(s)([bcçdfghjklmnpqstvwxyz])");
-    private static final Pattern pattern_digraph_special_4 = Pattern.compile("(?i)([aeiouáéíóú])[djrstxz](l)");
-    private static final Pattern pattern_digraph_general = Pattern.compile("(?i)([aeiouáéíóú])(" + String.join("|", DIGRAPHS) + ")");
-    private static final Pattern pattern_exception = Pattern.compile("(?i)ç?\\w+\\b");
-    private static final Pattern pattern_word_interaction = Pattern.compile("(?i)(l\\b)(\\s)([bcçdfghjklmnñpqstvwxyz])");
-    private static final Pattern pattern_vocal_tilde = Pattern.compile("(?i)á|é|í|ó|ú");
+    private static final Pattern pattern_h_general = Pattern.compile("(?iuU)(?<!c)(h)(\\w?)");
+    private static final Pattern pattern_h_hua = Pattern.compile("(?iuU)(?<!c)(h)(ua)");
+    private static final Pattern pattern_h_hue = Pattern.compile("(?iuU)(?<!c)(h)(u)(e)");
+    private static final Pattern pattern_x_starting = Pattern.compile("(?iuU)\\b(x)(?!d+\\b)");
+    private static final Pattern pattern_x = Pattern.compile("(?iuU)([aeiouáéíóú])(x)([aeiouyáéíóú])");
+    private static final Pattern pattern_ch = Pattern.compile("(?iuU)ch");
+    private static final Pattern pattern_gj = Pattern.compile("(?iuU)(g(?=[eiéí])|j)([aeiouáéíóú])");
+    private static final Pattern pattern_gue_gui = Pattern.compile("(?iuU)(g)u([eiéí])");
+    private static final Pattern pattern_guue_guui = Pattern.compile("(?iuU)(g)(ü)([eiéí])");
+    private static final Pattern pattern_guen = Pattern.compile("(?iuU)(b)(uen)");
+    private static final Pattern pattern_guel_gues = Pattern.compile("(?iuU)(s?)(a?)(?<!m)(b)(ue)(l|s)");
+    private static final Pattern pattern_v = Pattern.compile("(?iuU)v");
+    private static final Pattern pattern_nv = Pattern.compile("(?iuU)nv");
+    private static final Pattern pattern_ll = Pattern.compile("(?iuU)ll");
+    private static final Pattern pattern_l = Pattern.compile("(?iuU)(l)([bcçgsdfghkmpqrtxz])");
+    private static final Pattern pattern_psico_pseudo = Pattern.compile("(?iuU)p(sic|siq|seud)");
+    private static final Pattern pattern_vaf = Pattern.compile("(?iuU)(c(?=[eiéíêî])|z|s)([aeiouáéíóúâêîôû])");
+    private static final Pattern pattern_intervowel_d_end = Pattern.compile("(?iuU)\\b([\\p{L}\\p{M}\\p{Nd}_]*?)([aií])(d)([oa])(s?)\\b");
+    private static final Pattern pattern_eps_end = Pattern.compile("(?iuU)\\b([\\p{L}\\p{M}\\p{Nd}_]+?)(e)(ps)\\b");
+    private static final Pattern pattern_d_end = Pattern.compile("(?iuU)\\b([\\p{L}\\p{M}\\p{Nd}_]+?)([aeiouáéíóú])(d)\\b");
+    private static final Pattern pattern_s_end = Pattern.compile("(?iuU)\\b([\\p{L}\\p{M}\\p{Nd}_]+?)([aeiouáéíóú])(s)\\b");
+    private static final Pattern pattern_const_end = Pattern.compile("(?iuU)\\b([\\p{L}\\p{M}\\p{Nd}_]+?)([aeiouáéíóú])([bcfgjklprtxz])\\b");
+    private static final Pattern pattern_l_end = Pattern.compile("(?iuU)\\b([\\p{L}\\p{M}\\p{Nd}_]+?)([aeiouáéíóú])(l)\\b");
+    private static final Pattern pattern_digraph_special_1 = Pattern.compile("(?iuU)([aeiouáéíóú])([lr])s(t)");
+    private static final Pattern pattern_digraph_special_2 = Pattern.compile("(?iuU)(tr|p)([ao])(?:ns|st)([bcçdfghjklmnpqstvwxyz])");
+    private static final Pattern pattern_digraph_special_3 = Pattern.compile("(?iuU)([aeiouáéíóú])([bdnr])(s)([bcçdfghjklmnpqrstvwxyz])");
+    private static final Pattern pattern_digraph_special_4 = Pattern.compile("(?iuU)([aeiouáéíóú])[djrstxz](l)");
+    private static final Pattern pattern_digraph_general = Pattern.compile("(?iuU)([aeiouáéíóú])(" + String.join("|", DIGRAPHS) + ")");
+    private static final Pattern pattern_exception = Pattern.compile("(?iuU)ç?[\\p{L}\\p{M}\\p{Nd}_]+\\b");
+    private static final Pattern pattern_word_interaction = Pattern.compile("(?iuU)(l\\b)(\\s)([bcçdfghjklmnñpqstvwxyz])");
+    private static final Pattern pattern_vocal_tilde = Pattern.compile("(?iuU)á|é|í|ó|ú");
 
     // EPA character for Voiceless alveolar fricative /s/ https://en.wikipedia.org/wiki/Voiceless_alveolar_fricative
     public static final String VAF = "ç";
@@ -237,6 +237,9 @@ public class AndaluhRules {
     }};
 
     public static final Map<String, String> ENDING_RULES_EXCEPTION = new HashMap<String, String>() {{
+        // Brand names
+        put("andaluheeks", "andalugeeks");
+        put("andalujeeks", "andalugeeks");
         // Exceptions to digraph rules with nm
         put("biêmmandao", "bienmandao");
         put("biêmmeçabe", "bienmeçabe");
@@ -288,7 +291,7 @@ public class AndaluhRules {
         put("rock", "rôh");
         put("spray", "êppray");
         put("sprint", "êpprín");
-        put("wa", "gua");
+        put("wau", "guau");
     }};
 
     public static Boolean check_exception(Map<String, String> diccionario, String text)
@@ -299,11 +302,10 @@ public class AndaluhRules {
     public static String general_exception_replacer(Map<String, String> diccionario, MatchResult matchResult, String text) {
         String palabra = matchResult.group(0);
 
-        if(check_exception(diccionario, palabra))
-        {
-            if(StringUtils.IsLowerCase  (palabra)) return diccionario.get(palabra);
-            if(StringUtils.IsUpperCase  (palabra)) return diccionario.get(palabra).toUpperCase();
-            if(StringUtils.IsCapitalized(palabra)) return StringUtils.Capitalize(diccionario.get(palabra));
+        if (check_exception(diccionario, palabra)) {
+            String key = palabra.toLowerCase(Locale.ROOT);
+            String replacement = diccionario.get(key);
+            return StringUtils.KeepCase(palabra, replacement);
         }
 
         return palabra;
@@ -324,51 +326,68 @@ public class AndaluhRules {
         return g_correct_capitalization + text.substring(match + 1, match + 3);
     }
 
-    public static String h_rules_replacer(MatchResult matchResult, String text) {
-        int match = matchResult.start();
-        String undetermined_vocal = text.substring(match + 1, match + 2);
-        String charString = Character.toString(text.charAt(match));
-        boolean isLowerCase = StringUtils.IsLowerCase(charString);
-        if (charString.toLowerCase().toCharArray()[0] == 'h') {
-            return isLowerCase ? undetermined_vocal : undetermined_vocal.toUpperCase();
-        } else return "";
+    public static String h_rules_replacer(MatchResult matchResult) {
+        String hChar = matchResult.group(1);
+        String nextChar = matchResult.group(2);
+        if (nextChar == null || nextChar.isEmpty()) return "";
+
+        if (StringUtils.IsUpperCase(hChar)) {
+            return nextChar.toUpperCase();
+        }
+        return nextChar.toLowerCase();
     }
-    public static String h_exceptions_replacer(MatchResult matchResult, String text) {
-        return general_exception_replacer(H_RULES_EXCEPT, matchResult, text);
+
+    private static String h_word_replacer(String word) {
+        if (check_exception(H_RULES_EXCEPT, word)) {
+            return StringUtils.KeepCase(word, H_RULES_EXCEPT.get(word.toLowerCase(Locale.ROOT)));
+        }
+        Matcher matcher_h_general = pattern_h_general.matcher(word);
+        return matcher_h_general.replaceAll(matchResult -> h_rules_replacer(matchResult));
     }
 
     public static String h_rules(String text) {
-
-        Matcher matcher_exception = pattern_exception.matcher(text);
-        String exceptions_applied = matcher_exception.replaceAll(matchResult -> h_exceptions_replacer(matchResult, text));
-
-        Matcher matcher_hua = pattern_h_hua.matcher(exceptions_applied);
+        Matcher matcher_hua = pattern_h_hua.matcher(text);
         String hua_rules_applied = matcher_hua.replaceAll(matchResult -> h_hua_rules_replacer(matchResult, text));
 
         Matcher matcher_hue = pattern_h_hue.matcher(hua_rules_applied);
         String hue_rules_applied = matcher_hue.replaceAll(matchResult -> h_hue_rules_replacer(matchResult, hua_rules_applied));
 
-        Matcher matcher_h_general = pattern_h_general.matcher(hue_rules_applied);
-        return matcher_h_general.replaceAll(matchResult -> h_rules_replacer(matchResult, hue_rules_applied));
+        Matcher matcher_words = pattern_exception.matcher(hue_rules_applied);
+        return matcher_words.replaceAll(matchResult -> h_word_replacer(matchResult.group(0)));
     }
 
-    private static String x_starting_rules_replacer(MatchResult matchResult, String text) {
-        int match = matchResult.start();
-        String VAF_correct_capitalization = StringUtils.IsCapitalized(text.substring(match, match + 1)) ? VAF_mayus : VAF;
-        return text.substring(match, match) + VAF_correct_capitalization + text.substring(match + 1, match + 2);
+    private static String x_starting_rules_replacer(MatchResult matchResult, String vaf) {
+        String xChar = matchResult.group(1);
+        String vafUpper = vaf.toUpperCase(Locale.ROOT);
+        String vafCorrect = Character.isUpperCase(xChar.charAt(0)) ? vafUpper : vaf;
+        return vafCorrect;
     }
 
-    public static String x_rules_replacer(MatchResult matchResult, String text) {
-        int match = matchResult.start();
-        return text.substring(match, match + 1) + VAF + VAF + text.substring(match + 2, match + 3);
+    public static String x_rules_replacer(MatchResult matchResult, String vaf) {
+        String prev = matchResult.group(1);
+        String xChar = matchResult.group(2);
+        String next = matchResult.group(3);
+
+        char prevChar = prev.charAt(0);
+        char circumflex = StringUtils.GetVowelCircumflex(prevChar);
+        String vafUpper = vaf.toUpperCase(Locale.ROOT);
+        String vafCorrect = Character.isUpperCase(xChar.charAt(0)) ? vafUpper : vaf;
+
+        return String.valueOf(circumflex) + vafCorrect + vafCorrect + next;
     }
 
     public static String x_rules(String text) {
+        return x_rules(text, VAF);
+    }
+
+    public static String x_rules(String text, String vaf) {
+        if (text == null || text.isEmpty()) return text;
+
         Matcher matcher_x = pattern_x.matcher(text);
-        String x_rules_applied = matcher_x.replaceAll(matchResult -> x_rules_replacer(matchResult, text));
+        String x_rules_applied = matcher_x.replaceAll(matchResult -> x_rules_replacer(matchResult, vaf));
 
         Matcher matcher_starting_x = pattern_x_starting.matcher(x_rules_applied);
-        return matcher_starting_x.replaceAll(matchResult -> x_starting_rules_replacer(matchResult, x_rules_applied));
+        return matcher_starting_x.replaceAll(matchResult -> x_starting_rules_replacer(matchResult, vaf));
     }
 
     public static String ch_rules_replacer(MatchResult matchResult, String text) {
@@ -382,73 +401,81 @@ public class AndaluhRules {
         return matcher_ch.replaceAll(matchResult -> ch_rules_replacer(matchResult, text));
     }
 
-    public static String gj_rules_replacer(MatchResult matchResult, String text) {
-        int match = matchResult.start();
-        String x_correct_capitalization = StringUtils.IsLowerCase(text.substring(match, match + 1)) ? VVF : VVF_mayus;
-        return x_correct_capitalization + text.substring(match + 1, match + 2);
+    public static String gj_rules_replacer(MatchResult matchResult, String vvf) {
+        String gjChar = matchResult.group(1);
+        String next = matchResult.group(2);
+        String vvfUpper = vvf.toUpperCase(Locale.ROOT);
+        String vvfCorrect = Character.isUpperCase(gjChar.charAt(0)) ? vvfUpper : vvf;
+        return vvfCorrect + next;
     }
 
-    public static String gue_gui_rules_replacer(MatchResult matchResult, String text) {
-        int match = matchResult.start();
-        int matchEnd = matchResult.end();
-        return text.substring(match, match + 1) + text.substring(match + 2, matchEnd);
+    public static String gue_gui_rules_replacer(MatchResult matchResult) {
+        String gChar = matchResult.group(1);
+        String next = matchResult.group(2);
+        String gCorrect = StringUtils.IsLowerCase(gChar) ? "g" : "G";
+        return gCorrect + next;
     }
 
-    public static String guue_guui_rules_replacer(MatchResult matchResult, String text) {
-        int match = matchResult.start();
-        int matchEnd = matchResult.end();
-        String u_correct_capitalization = StringUtils.IsLowerCase(text.substring(match + 1, match + 2)) ? "u" : "U";
-
-        return text.substring(match, match + 1) + u_correct_capitalization + text.substring(match + 2, matchEnd);
+    public static String guue_guui_rules_replacer(MatchResult matchResult) {
+        String gChar = matchResult.group(1);
+        String uDia = matchResult.group(2);
+        String next = matchResult.group(3);
+        String uCorrect = Character.isUpperCase(uDia.charAt(0)) ? "U" : "u";
+        return gChar + uCorrect + next;
     }
 
-    public static String guen_guel_gues_rules_replacer(MatchResult matchResult, String text) {
-        int match = matchResult.start();
-        int matchEnd = matchResult.end();
-        String g_correct_capitalization = StringUtils.IsLowerCase(text.substring(match, match + 1)) ? "g" : "G";
-        return g_correct_capitalization + text.substring(match + 1, matchEnd);
+    public static String guen_rules_replacer(MatchResult matchResult) {
+        String bChar = matchResult.group(1);
+        String uen = matchResult.group(2);
+        String gCorrect = StringUtils.IsLowerCase(bChar) ? "g" : "G";
+        return gCorrect + uen;
     }
 
-    public static String guen_rules_replacer(MatchResult matchResult, String text) {
-        return guen_guel_gues_rules_replacer(matchResult, text);
-    }
-
-    public static String guel_gues_rules_replacer(MatchResult matchResult, String text) {
-        return guen_guel_gues_rules_replacer(matchResult, text);
+    public static String guel_gues_rules_replacer(MatchResult matchResult) {
+        String s = matchResult.group(1);
+        String a = matchResult.group(2);
+        String bChar = matchResult.group(3);
+        String ue = matchResult.group(4);
+        String cons = matchResult.group(5);
+        String gCorrect = StringUtils.IsLowerCase(bChar) ? "g" : "G";
+        return s + a + gCorrect + ue + cons;
     }
 
     public static String exception_gj_rules_replacer(MatchResult matchResult, String text) {
         return general_exception_replacer(GJ_RULES_EXCEPT, matchResult, text);
     }
     public static String gj_rules(String text) {
+        return gj_rules(text, VVF);
+    }
+    public static String gj_rules(String text, String vvf) {
         Matcher matcher_exception_gj = pattern_exception.matcher(text);
         String exception_gj_applied = matcher_exception_gj.replaceAll(matchResult -> exception_gj_rules_replacer(matchResult, text));
 
         Matcher matcher_gj = pattern_gj.matcher(exception_gj_applied);
-        String gj_rules_applied = matcher_gj.replaceAll(matchResult -> gj_rules_replacer(matchResult, text));
+        String gj_rules_applied = matcher_gj.replaceAll(matchResult -> gj_rules_replacer(matchResult, vvf));
 
         Matcher matcher_gue_gui = pattern_gue_gui.matcher(gj_rules_applied);
-        String gue_gui_rules_applied = matcher_gue_gui.replaceAll(matchResult -> gue_gui_rules_replacer(matchResult, gj_rules_applied));
+        String gue_gui_rules_applied = matcher_gue_gui.replaceAll(matchResult -> gue_gui_rules_replacer(matchResult));
 
         Matcher matcher_guue_guui = pattern_guue_guui.matcher(gue_gui_rules_applied);
-        String guue_guui_rules_applied = matcher_guue_guui.replaceAll(matchResult -> guue_guui_rules_replacer(matchResult, gue_gui_rules_applied));
+        String guue_guui_rules_applied = matcher_guue_guui.replaceAll(matchResult -> guue_guui_rules_replacer(matchResult));
 
         Matcher matcher_guen = pattern_guen.matcher(guue_guui_rules_applied);
-        String guen_rules_applied = matcher_guen.replaceAll(matchResult -> guen_rules_replacer(matchResult, guue_guui_rules_applied));
+        String guen_rules_applied = matcher_guen.replaceAll(matchResult -> guen_rules_replacer(matchResult));
 
         Matcher matcher_guel_gues = pattern_guel_gues.matcher(guen_rules_applied);
-        return matcher_guel_gues.replaceAll(matchResult -> guel_gues_rules_replacer(matchResult, guen_rules_applied));
+        return matcher_guel_gues.replaceAll(matchResult -> guel_gues_rules_replacer(matchResult));
     }
 
-    public static String nv_rules_replacer(MatchResult matchResult, String text) {
-        int match = matchResult.start();
-        return text.substring(match, match) + "mb" + text.substring(match + 2, match + 2);
+    public static String nv_rules_replacer(MatchResult matchResult) {
+        String matchText = matchResult.group(0);
+        return StringUtils.KeepCase(matchText, "mb");
     }
 
-    public static String v_rules_replacer(MatchResult matchResult, String text) {
-        int match = matchResult.start();
-        String v_correct_capitalization = StringUtils.IsLowerCase(text.substring(match, match + 1)) ? "b" : "B";
-        return text.substring(match, match) + v_correct_capitalization + text.substring(match + 2, match + 2);
+    public static String v_rules_replacer(MatchResult matchResult) {
+        String vChar = matchResult.group(0);
+        String v_correct_capitalization = StringUtils.IsLowerCase(vChar) ? "b" : "B";
+        return v_correct_capitalization;
     }
 
     public static String v_exception_replacer(MatchResult matchResult, String text) {
@@ -459,10 +486,10 @@ public class AndaluhRules {
         String v_exception_applied = matcher_exception.replaceAll(matchResult -> v_exception_replacer(matchResult,text));
 
         Matcher matcher_nv = pattern_nv.matcher(v_exception_applied);
-        String nv_rules_applied = matcher_nv.replaceAll(matchResult -> nv_rules_replacer(matchResult, v_exception_applied));
+        String nv_rules_applied = matcher_nv.replaceAll(matchResult -> nv_rules_replacer(matchResult));
 
         Matcher matcher_v = pattern_v.matcher(nv_rules_applied);
-        return matcher_v.replaceAll(matchResult -> v_rules_replacer(matchResult, nv_rules_applied));
+        return matcher_v.replaceAll(matchResult -> v_rules_replacer(matchResult));
     }
 
     public static String ll_rules_replacer(MatchResult matchResult, String text) {
@@ -509,15 +536,21 @@ public class AndaluhRules {
         return matcher_psico_pseudo.replaceAll(matchResult -> psico_pseudo_rules_replacer(matchResult, text));
     }
 
-    public static String vaf_rules_replacer(MatchResult matchResult, String text) {
-        int match = matchResult.start();
-        String vaf_correct_capitalization = StringUtils.IsCapitalized(text.substring(match, match + 1)) ? VAF_mayus : VAF;
-        return text.substring(match, match) + vaf_correct_capitalization + text.substring(match + 1, match + 2);
+    public static String vaf_rules_replacer(MatchResult matchResult, String vaf) {
+        String consonant = matchResult.group(1);
+        String next = matchResult.group(2);
+        String vafUpper = vaf.toUpperCase(Locale.ROOT);
+        String vafCorrect = Character.isUpperCase(consonant.charAt(0)) ? vafUpper : vaf;
+        return vafCorrect + next;
     }
 
     public static String vaf_rules(String text) {
+        return vaf_rules(text, VAF);
+    }
+
+    public static String vaf_rules(String text, String vaf) {
         Matcher matcher_vaf = pattern_vaf.matcher(text);
-        return matcher_vaf.replaceAll(matchResult -> vaf_rules_replacer(matchResult, text));
+        return matcher_vaf.replaceAll(matchResult -> vaf_rules_replacer(matchResult, vaf));
     }
 
     public static Boolean contain_vocal_tilde(String text) {
@@ -545,80 +578,77 @@ public class AndaluhRules {
     }
 
     public static String intervowel_d_end_rules_replacer(MatchResult matchResult, String text) {
-        int match = matchResult.start();
-        int matchEnd = matchResult.end();
+        String prefix = matchResult.group(1);
+        String suffixVowelA = matchResult.group(2);
+        String suffixD = matchResult.group(3);
+        String suffixVowelB = matchResult.group(4);
+        String endingS = matchResult.group(5);
 
-        String prefix = get_prefix(matchResult, text);
+        String suffix = suffixVowelA + suffixD + suffixVowelB + endingS;
+        String palabra = prefix + suffix;
 
-        String suffix = text.substring(match, matchEnd);
+        if (contain_vocal_tilde(prefix)) return palabra;
 
-        if (contain_vocal_tilde(prefix)) return suffix;
-
-        String palabra = StringUtils.GetWholeWord(text, match);
-
-        if(check_exception(WORDEND_D_INTERVOWEL_RULES_EXCEPT, palabra)) // is NOT general bc subtitutes only suffix
-        {
-            return suffix;
+        if (check_exception(WORDEND_D_INTERVOWEL_RULES_EXCEPT, palabra)) {
+            return StringUtils.KeepCase(palabra,
+                    WORDEND_D_INTERVOWEL_RULES_EXCEPT.get(palabra.toLowerCase(Locale.ROOT)));
         }
 
-        String suffixLowerCased = suffix.toLowerCase();
-        boolean isLowerCase = StringUtils.IsLowerCase(suffix);
+        String suffixLowerCased = suffix.toLowerCase(Locale.ROOT);
+        char suffixVowelAChar = suffixVowelA.charAt(0);
+        char suffixVowelBChar = suffixVowelB.charAt(0);
+        boolean suffixVowelAUpper = Character.isUpperCase(suffixVowelAChar);
+        boolean suffixVowelBUpper = Character.isUpperCase(suffixVowelBChar);
+
         switch (suffixLowerCased) {
             case "ada":
-                return isLowerCase ? "á" : "Á";
+                return prefix + (suffixVowelBUpper ? "Á" : "á");
             case "adas":
-                return isLowerCase ? "âh" : "ÂH";
+                return prefix + StringUtils.KeepCase(suffix.substring(0, 2),
+                        String.valueOf(StringUtils.GetVowelCircumflex(suffixVowelAChar)) + "h");
             case "ado":
-                return isLowerCase ? "ao" : "AO";
+                return prefix + suffixVowelAChar + suffixVowelBChar;
             case "ados":
-                return isLowerCase ? "áôh" : "ÁÔH";
             case "idos":
             case "ídos":
-                return isLowerCase ? "íôh" : "ÍÔH";
+                return prefix + StringUtils.GetVowelTilde(suffixVowelAChar)
+                        + StringUtils.GetVowelCircumflex(suffixVowelBChar);
             case "ido":
             case "ído":
-                return isLowerCase ? "ío" : "ÍO";
+                return prefix + (suffixVowelAUpper ? "Í" : "í") + suffixVowelBChar;
             default:
-                return suffix;
+                return palabra;
         }
     }
 
     public static String eps_end_rules_replacer(MatchResult matchResult, String text) {
-        int match = matchResult.start();
-        int matchEnd = matchResult.end();
+        String prefix = matchResult.group(1);
+        String suffixVowel = matchResult.group(2);
+        String suffixConst = matchResult.group(3);
 
-        String prefix = get_prefix(matchResult, text);
-
-        String suffix = text.substring(match, matchEnd);
-        boolean isLowerCase = StringUtils.IsLowerCase(suffix);
-
-        if (!contain_vocal_tilde(prefix)) return suffix;
-        return isLowerCase ? "ê" : "Ê";
+        if (!contain_vocal_tilde(prefix)) return prefix + suffixVowel + suffixConst;
+        return prefix + (Character.isUpperCase(suffixVowel.charAt(0)) ? "Ê" : "ê");
     }
 
     public static String d_end_rules_replacer(MatchResult matchResult, String text) {
-        int match = matchResult.start();
-        int matchEnd = matchResult.end();
+        String prefix = matchResult.group(1);
+        String suffixVowel = matchResult.group(2);
+        String suffixConst = matchResult.group(3);
 
-        String prefix = get_prefix(matchResult, text);
-
-        String suffix = text.substring(match, matchEnd);
-        boolean isLowerCase = StringUtils.IsLowerCase(suffix);
-
-        char vocalCandidata = suffix.charAt(0);
+        char vocalCandidata = suffixVowel.charAt(0);
         if (contain_vocal_tilde(prefix)) {
-            return apply_repl_rules(Character.toString(vocalCandidata));
+            return prefix + apply_repl_rules(Character.toString(vocalCandidata));
         }
 
         char[] vocalesValidas = {'a', 'e', 'A', 'E', 'á', 'é', 'Á', 'É'};
         for (char vocalValida : vocalesValidas) {
             if (vocalValida == vocalCandidata) {
-                return apply_stressed_rules(Character.toString(vocalCandidata));
+                return prefix + apply_stressed_rules(Character.toString(vocalCandidata));
             }
         }
 
-        String addedH = isLowerCase ? "h" : "H";
-        return apply_stressed_rules(Character.toString(vocalCandidata)) + addedH;
+        String addedH = Character.isUpperCase(suffixConst.charAt(0)) ? "H" : "h";
+        return prefix + apply_stressed_rules(Character.toString(vocalCandidata)) + addedH;
     }
 
     private static String apply_repl_rules(String vocal) {
@@ -630,34 +660,33 @@ public class AndaluhRules {
     }
 
     public static String s_end_rules_replacer(MatchResult matchResult, String text) {
-        int match = matchResult.start();
-        int matchEnd = matchResult.end();
+        String prefix = matchResult.group(1);
+        String suffixVowel = matchResult.group(2);
+        String suffixConst = matchResult.group(3);
 
-        String suffix = text.substring(match, matchEnd);
-        boolean isLowerCase = StringUtils.IsLowerCase(suffix);
-
-        if (!contain_vocal_tilde(Character.toString(suffix.charAt(0)))) {
-            return apply_repl_rules(Character.toString(suffix.charAt(0)));
+        if (!contain_vocal_tilde(suffixVowel)) {
+            return prefix + apply_repl_rules(suffixVowel);
         }
-        String addedH = isLowerCase ? "h" : "H";
+        String addedH = Character.isUpperCase(suffixConst.charAt(0)) ? "H" : "h";
 
-        return apply_repl_rules(Character.toString(suffix.charAt(0))) + addedH;
+        return prefix + apply_repl_rules(suffixVowel) + addedH;
     }
 
     public static String const_end_rules_replacer(MatchResult matchResult, String text) {
-        int match = matchResult.start();
-        int matchEnd = matchResult.end();
+        String prefix = matchResult.group(1);
+        String suffixVowel = matchResult.group(2);
+        String suffixConst = matchResult.group(3);
+        String word = prefix + suffixVowel + suffixConst;
 
-        String prefix = get_prefix(matchResult, text);
-
-        String suffix = text.substring(match, matchEnd);
-        boolean isLowerCase = StringUtils.IsLowerCase(suffix);
+        if (check_exception(WORDEND_CONST_RULES_EXCEPT, word)) {
+            return StringUtils.KeepCase(word, WORDEND_CONST_RULES_EXCEPT.get(word.toLowerCase(Locale.ROOT)));
+        }
 
         if (contain_vocal_tilde(prefix)) {
-            return apply_repl_rules(Character.toString(suffix.charAt(0)));
+            return prefix + apply_repl_rules(suffixVowel);
         }
-        String addedH = isLowerCase ? "h" : "H";
-        return apply_repl_rules(Character.toString(suffix.charAt(0))) + addedH;
+        String addedH = Character.isUpperCase(suffixConst.charAt(0)) ? "H" : "h";
+        return prefix + apply_repl_rules(suffixVowel) + addedH;
     }
 
     public static String d_end_exceptions_replacer(MatchResult matchResult, String text) {
@@ -698,24 +727,10 @@ public class AndaluhRules {
     }
 
     public static String digraph_special1_rules_replacer(MatchResult matchResult, String text) {
-        int match = matchResult.start();
-        int matchEnd = matchResult.end();
-
-        char l_or_r = text.charAt(match + 1);
-        boolean isLowerCase = StringUtils.IsLowerCase(Character.toString(l_or_r));
-
-        switch (l_or_r) {
-            case 'l':
-            case 'L':
-                String rttString = isLowerCase ? "rtt" : "RTT";
-                return text.substring(match, match + 1) + rttString;
-            case 'r':
-            case 'R':
-                String ttString = isLowerCase ? "tt" : "TT";
-                return text.substring(match, match + 2) + ttString;
-            default:
-                return text.substring(match, matchEnd);
-        }
+        String vowelChar = matchResult.group(1);
+        String lrChar = matchResult.group(2);
+        String tChar = matchResult.group(3);
+        return vowelChar + lrChar + tChar + tChar;
     }
 
     public static String digraph_special2_rules_replacer(MatchResult matchResult, String text) {
@@ -724,9 +739,9 @@ public class AndaluhRules {
         char cons_char = matchResult.group(0).charAt(matchResult.group(0).length() - 1);
 
         if (Character.toLowerCase(cons_char) == 'l')
-            return init_char + apply_repl_rules(Character.toString(vowel_char)) + cons_char + "-" + cons_char;
+            return init_char + StringUtils.GetVowelCircumflex(vowel_char) + cons_char + "-" + cons_char;
         else
-            return init_char + apply_repl_rules(Character.toString(vowel_char)) + cons_char + cons_char;
+            return init_char + StringUtils.GetVowelCircumflex(vowel_char) + cons_char + cons_char;
     }
 
     public static String digraph_special3_rules_replacer(MatchResult matchResult, String text) {
@@ -740,7 +755,7 @@ public class AndaluhRules {
         if (Character.toLowerCase(cons_char) == 'r' && Character.toLowerCase(s_char) == 's') {
             return Character.toString(vowel_char) + cons_char + digraph_char + digraph_char;
         } else {
-            return apply_repl_rules(Character.toString(vowel_char)) + digraph_char + digraph_char;
+            return StringUtils.GetVowelCircumflex(vowel_char) + "" + digraph_char + digraph_char;
         }
     }
 
@@ -750,7 +765,7 @@ public class AndaluhRules {
         char vowel_char = text.charAt(match);
         char digraph_char = text.charAt(matchEnd - 1);
 
-        return apply_repl_rules(Character.toString(vowel_char)) + digraph_char + "-" + digraph_char;
+        return StringUtils.GetVowelCircumflex(vowel_char) + "" + digraph_char + "-" + digraph_char;
     }
 
     public static String digraph_general_rules_replacer(MatchResult matchResult, String text) {
@@ -759,7 +774,7 @@ public class AndaluhRules {
         char vowel_char = text.charAt(match);
         char digraph_char = text.charAt(matchEnd - 1);
 
-        return apply_repl_rules(Character.toString(vowel_char)) + digraph_char + digraph_char;
+        return StringUtils.GetVowelCircumflex(vowel_char) + "" + digraph_char + digraph_char;
     }
 
     public static String digraph_rules(String text) {
