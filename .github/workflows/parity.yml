@@ -45,3 +45,12 @@ jobs:
       - name: Run parity tests
         run: |
           java -cp out com.andaluh.AndaluhTestRunner out/lemario_py.csv --min-rate=1.0
+
+      - name: Notify Discord on failure
+        if: failure()
+        uses: sarisia/actions-status-discord@v1
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          status: Failure
+          title: "Parity Check Failed"
+          description: "The andaluh-java parity check workflow has failed."
