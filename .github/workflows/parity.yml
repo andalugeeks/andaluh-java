@@ -1,11 +1,7 @@
 name: Parity With andaluh-py
 
 on:
-  repository_dispatch:
-    types: [andaluh_py_release]
   workflow_dispatch:
-  schedule:
-    - cron: "15 1 * * *"
 
 jobs:
   parity:
